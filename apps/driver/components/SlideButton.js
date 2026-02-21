@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 
-export default function SlideButton({ onSlideSuccess, type = 'end' }) {
+export default function SlideButton({ onSlideSuccess, type = 'end', label, successLabel }) {
     const x = useMotionValue(0);
     const [containerWidth, setContainerWidth] = useState(300);
     const containerRef = useRef(null);
@@ -18,8 +18,8 @@ export default function SlideButton({ onSlideSuccess, type = 'end' }) {
     const isStart = type === 'start';
     const mainColor = isStart ? '#10b981' : '#ef4444'; // Green or Red
     const bgColor = isStart ? '#d1fae5' : '#fee2e2'; // Light Green or Light Red
-    const successText = isStart ? 'Trip Started! ✓' : 'Trip Ended! ✓';
-    const slideText = isStart ? 'Slide to Start Trip »' : 'Slide to End Trip »';
+    const successText = successLabel || (isStart ? 'Trip Started! ✓' : 'Trip Ended! ✓');
+    const slideText = label || (isStart ? 'Slide to Start Trip »' : 'Slide to End Trip »');
     const icon = isStart ? '▶️' : '🛑';
 
     // Get container width on mount and resize

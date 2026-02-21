@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function PreTripModal({ isOpen, onClose, onConfirm }) {
+export default function PreTripModal({ isOpen, onClose, onConfirm, t }) {
     const [checks, setChecks] = useState({
         fuel: false,
         tires: false,
@@ -35,19 +35,19 @@ export default function PreTripModal({ isOpen, onClose, onConfirm }) {
                     width: '100%', maxWidth: '400px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)'
                 }}>
                     <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '8px', color: '#0f172a' }}>
-                        📋 Pre-Trip Safety Check
+                        {t?.preTripTitle || '📋 Pre-Trip Safety Check'}
                     </h2>
                     <p style={{ color: '#64748b', marginBottom: '24px' }}>
-                        Please verify the following before starting your trip.
+                        {t?.preTripDesc || 'Please verify the following before starting your trip.'}
                     </p>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
                         {[
-                            { id: 'fuel', label: 'Fuel / Battery Level Sufficient' },
-                            { id: 'tires', label: 'Tires Condition & Pressure OK' },
-                            { id: 'brakes', label: 'Brakes Tested & Functional' },
-                            { id: 'lights', label: 'Headlights & Indicators Working' },
-                            { id: 'documents', label: 'License & Bus Documents Present' },
+                            { id: 'fuel', label: t?.chkFuel || 'Fuel / Battery Level Sufficient' },
+                            { id: 'tires', label: t?.chkTires || 'Tires Condition & Pressure OK' },
+                            { id: 'brakes', label: t?.chkBrakes || 'Brakes Tested & Functional' },
+                            { id: 'lights', label: t?.chkLights || 'Headlights & Indicators Working' },
+                            { id: 'documents', label: t?.chkDocs || 'License & Bus Documents Present' },
                         ].map(item => (
                             <div
                                 key={item.id}
@@ -78,7 +78,7 @@ export default function PreTripModal({ isOpen, onClose, onConfirm }) {
                                 background: '#f1f5f9', color: '#64748b', fontWeight: 'bold', cursor: 'pointer'
                             }}
                         >
-                            Cancel
+                            {t?.cancel || 'Cancel'}
                         </button>
                         <button
                             onClick={onConfirm}
@@ -92,7 +92,7 @@ export default function PreTripModal({ isOpen, onClose, onConfirm }) {
                                 transition: 'all 0.2s'
                             }}
                         >
-                            Confirm & Start
+                            {t?.confirmStart || 'Confirm & Start'}
                         </button>
                     </div>
                 </div>

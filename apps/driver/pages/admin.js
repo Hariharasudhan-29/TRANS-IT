@@ -751,6 +751,34 @@ export default function AdminPanel() {
                     </div>
                 </div>
 
+                {/* License Expiry Global Alert */}
+                {(() => {
+                    const today = new Date();
+                    const expiringDrivers = driversList.filter(d => {
+                        if (!d.licenseExpiry) return false;
+                        const exp = new Date(d.licenseExpiry);
+                        const diffTime = exp - today;
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                        return diffDays <= 60 && diffDays >= 0;
+                    });
+
+                    if (expiringDrivers.length > 0) {
+                        return (
+                            <div style={{ background: '#fef2f2', borderLeft: '4px solid #ef4444', padding: '16px', borderRadius: '8px', marginBottom: '24px', color: '#b91c1c' }}>
+                                <h3 style={{ margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <span>⚠️</span> Driver Licenses Expiring Soon
+                                </h3>
+                                <ul style={{ margin: 0, paddingLeft: '24px', fontSize: '14px' }}>
+                                    {expiringDrivers.map(d => (
+                                        <li key={d.id}><strong>{d.name}</strong> (Bus {d.busNumber || 'N/A'}) — Expires on {new Date(d.licenseExpiry).toLocaleDateString()}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        );
+                    }
+                    return null;
+                })()}
+
                 {/* Tabs */}
                 <div style={{ display: 'flex', gap: '10px', marginBottom: '30px', borderBottom: '1px solid rgba(255,255,255,0.2)', paddingBottom: '1px', overflowX: 'auto' }}>
                     {['overview', 'analytics', 'trips', 'users', 'drivers', 'live_map', 'routes', 'announcements', 'broadcast', 'bulk_import', 'geofence', 'leave', 'feedback', 'queries', 'sos', 'delays', 'maintenance', 'expenses', 'lost_found'].map(tab => {
@@ -1408,10 +1436,14 @@ export default function AdminPanel() {
                                         {driversList.length > 0 ? (
                                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
                                                 {driversList.map(d => (
-                                                    <motion.div layout key={d.id} style={{ background: '#f8fafc', padding: '8px 16px', borderRadius: '99px', border: '1px solid #e2e8f0', fontSize: '14px', color: '#334155', display: 'flex', alignItems: 'center', gap: '12px', fontWeight: '500' }}>
-                                                        <span>{d.name}</span>
-                                                        {d.phone && <span style={{ color: '#94a3b8' }}>• {d.phone}</span>}
-                                                        <button onClick={() => handleDeleteDriver(d.id)} style={{ border: 'none', background: '#fee2e2', color: '#ef4444', width: '24px', height: '24px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold', lineHeight: 1 }}>×</button>
+                                                    <motion.div layout key={d.id} style={{ background: '#f8fafc', padding: '12px 16px', borderRadius: '16px', border: '1px solid #e2e8f0', fontSize: '14px', color: '#334155', display: 'flex', flexDirection: 'column', gap: '8px', fontWeight: '500', minWidth: '220px' }}>
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                            <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{d.name}</span>
+                                                            <button onClick={() => handleDeleteDriver(d.id)} style={{ border: 'none', background: '#fee2e2', color: '#ef4444', width: '24px', height: '24px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold', lineHeight: 1 }}>×</button>
+                                                        </div>
+                                                        {d.phone && <span style={{ color: '#64748b' }}>📞 {d.phone}</span>}
+                                                        {d.busNumber && <span style={{ color: '#64748b' }}>🚍 Primary Bus: {d.busNumber}</span>}
+                                                        {d.licenseNumber && <span style={{ color: '#64748b' }}>🪪 License: {d.licenseNumber} (Exp: {d.licenseExpiry})</span>}
                                                     </motion.div>
                                                 ))}
                                             </div>

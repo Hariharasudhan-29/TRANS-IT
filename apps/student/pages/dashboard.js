@@ -439,7 +439,7 @@ export default function StudentDashboard() {
             const snapshot = await getDocs(q);
             if (!snapshot.empty) {
                 await updateDoc(snapshot.docs[0].ref, { status: 'Dropped Off', droppedOffAt: Date.now() });
-                
+
                 // Eco-Points Gamification logic
                 const currentPoints = regForm.ecoPoints || 0;
                 const newPoints = currentPoints + 5; // 5 points = approx 1.2kg CO2 saved per trip
@@ -615,17 +615,17 @@ export default function StudentDashboard() {
                         <span>🌱</span> {regForm.ecoPoints || 0}
                     </motion.div>
 
-                    <motion.button onClick={() => setShowSupport(true)} whileTap={{ scale: 0.9 }} style={{ background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: theme.highlight }}>
+                    <motion.button title="Help & Support" onClick={() => setShowSupport(true)} whileTap={{ scale: 0.9 }} style={{ background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: theme.highlight }}>
                         <HelpCircle size={20} />
                     </motion.button>
-                    <motion.button onClick={() => setShowLostFound(true)} whileTap={{ scale: 0.9 }} style={{ background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: theme.highlight }}>
+                    <motion.button title="Lost & Found" onClick={() => setShowLostFound(true)} whileTap={{ scale: 0.9 }} style={{ background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: theme.highlight }}>
                         <Search size={20} />
                     </motion.button>
-                    <motion.button onClick={toggleTheme} whileTap={{ scale: 0.9 }} style={{ background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: theme.text }}>
+                    <motion.button title="Toggle Theme" onClick={toggleTheme} whileTap={{ scale: 0.9 }} style={{ background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: theme.text }}>
                         {darkMode ? <Sun size={20} /> : <Moon size={20} />}
                     </motion.button>
                     {/* Notification Bell */}
-                    <motion.button onClick={() => setShowNotificationCenter(true)} whileTap={{ scale: 0.9 }} style={{ position: 'relative', background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: unreadNotifications > 0 ? '#f59e0b' : theme.highlight }}>
+                    <motion.button title="Notifications" onClick={() => setShowNotificationCenter(true)} whileTap={{ scale: 0.9 }} style={{ position: 'relative', background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: unreadNotifications > 0 ? '#f59e0b' : theme.highlight }}>
                         <Bell size={20} />
                         {unreadNotifications > 0 && (
                             <div style={{ position: 'absolute', top: '4px', right: '4px', background: '#ef4444', color: 'white', borderRadius: '50%', width: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 'bold' }}>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { initFirebase } from '../firebaseClient';
 import { getAuth, signOut } from 'firebase/auth';
-import { getFirestore, doc, setDoc, deleteDoc, getDocs, serverTimestamp, onSnapshot, collection, query, where, addDoc, updateDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, deleteDoc, getDocs, serverTimestamp, onSnapshot, collection, query, where, addDoc, updateDoc } from 'firebase/firestore';
 import { AnimatePresence, motion } from 'framer-motion';
 import AnalogSpeedometer from '../components/AnalogSpeedometer';
 import SlideButton from '../components/SlideButton';
@@ -24,6 +24,141 @@ export default function DriverDashboard() {
     const [viewMode, setViewMode] = useState('speed'); // 'speed' or 'map'
     const [showChecklist, setShowChecklist] = useState(false);
     const [breakdownMode, setBreakdownMode] = useState(false);
+
+    // Translations for English (en) and Tamil (ta)
+    const [lang, setLang] = useState('en');
+    useEffect(() => {
+        const savedLang = localStorage.getItem('driver_lang');
+        if (savedLang) setLang(savedLang);
+    }, []);
+
+    const toggleLang = () => {
+        const newLang = lang === 'en' ? 'ta' : 'en';
+        setLang(newLang);
+        localStorage.setItem('driver_lang', newLang);
+    };
+
+    const T = {
+        en: {
+            app: "Campus Transit",
+            hi: "Hi,",
+            logout: "Logout",
+            showQR: "Show QR",
+            delay: "Delay",
+            fix: "Fix",
+            fuel: "Fuel",
+            breakdown: "REPORT BREAKDOWN",
+            foundItem: "Found Item",
+            quickAlert: "Quick Alert",
+            performance: "My Performance",
+            selectBus: "Please Select a Bus Above",
+            startTrip: "Slide to Start Trip »",
+            endTrip: "Slide to End Trip »",
+            instrTitle: "Instructions:",
+            inst1: "Identify the nearest bus on the map.",
+            inst2: "Click on a bus to see distance and driver info.",
+            inst3: "Contact the driver to arrange student pickup.",
+            nextStop: "Next Stop",
+            expected: "Expected:",
+            nextStopBtn: "Next Stop ➡️",
+            underMaint: "Under Maintenance",
+            chooseAnother: "Choose Another Bus",
+            delayTitle: "Report a Delay",
+            delayDesc: "Notify the admin about late arrival.",
+            heavyTraffic: "Heavy Traffic",
+            breakdownDelay: "Breakdown",
+            weatherDelay: "Weather",
+            accident: "Accident",
+            otherReason: "Others (Custom Reason)",
+            cancel: "Cancel",
+            enterReason: "Enter specific reason for delay:",
+            maintTitle: "Request Maintenance",
+            maintDesc: "What needs fixing?",
+            brakeIssue: "Brake Issue",
+            engineNoise: "Engine Noise",
+            acNotCooling: "AC Not Cooling",
+            tireIssue: "Tire Issue",
+            seatBroken: "Seat Broken",
+            lightsMalfunction: "Lights Malfunction",
+            expenseTitle: "Log Fuel / Expense",
+            expenseDesc: "Keep track of your fuel and trip expenses.",
+            fuelGas: "Fuel / Gas",
+            tollFee: "Toll Fee",
+            quickRepairs: "Quick Repairs",
+            otherExpenses: "Other Expenses",
+            amountPl: "Amount (₹)",
+            detailsPl: "Details (e.g. 20L Diesel, Toll Booth name)",
+            submit: "Submit",
+            preTripTitle: "📋 Pre-Trip Safety Check",
+            preTripDesc: "Please verify the following before starting your trip.",
+            chkFuel: "Fuel / Battery Level Sufficient",
+            chkTires: "Tires Condition & Pressure OK",
+            chkBrakes: "Brakes Tested & Functional",
+            chkLights: "Headlights & Indicators Working",
+            chkDocs: "License & Bus Documents Present",
+            confirmStart: "Confirm & Start",
+        },
+        ta: {
+            app: "வளாகப் போக்குவரத்து",
+            hi: "வணக்கம்,",
+            logout: "வெளியேறு",
+            showQR: "QR காட்டு",
+            delay: "தாமதம்",
+            fix: "பழுதுபார்",
+            fuel: "எரிபொருள்",
+            breakdown: "பழுதடைந்ததை அறிவி",
+            foundItem: "பொருள் அறிவி",
+            quickAlert: "விரைவு எச்சரிக்கை",
+            performance: "என் செயல்திறன்",
+            selectBus: "தயவுசெய்து மேலே ஒரு பேருந்தைத் தேர்ந்தெடுக்கவும்",
+            startTrip: "தொடங்க இழுக்கவும் »",
+            endTrip: "முடிக்க இழுக்கவும் »",
+            instrTitle: "வழிமுறைகள்:",
+            inst1: "வரைபடத்தில் அருகிலுள்ள பேருந்தைக் கண்டறியவும்.",
+            inst2: "விவரத்தைக் காண பேருந்தைக் கிளிக் செய்யவும்.",
+            inst3: "ஓட்டுநரைத் தொடர்புகொள்ளவும்.",
+            nextStop: "அடுத்த நிறுத்தம்",
+            expected: "நேரம்:",
+            nextStopBtn: "அடுத்த நிறுத்தம் ➡️",
+            underMaint: "பராமரிப்பில் உள்ளது",
+            chooseAnother: "வேறொரு பேருந்து தேர்ந்தெடு",
+            delayTitle: "தாமதத்தை அறிவி",
+            delayDesc: "தாமதமாக வருவதை நிர்வாகிக்கு தெரிவிக்கவும்.",
+            heavyTraffic: "கடுமையான போக்குவரத்து",
+            breakdownDelay: "பழுது",
+            weatherDelay: "வானிலை",
+            accident: "விபத்து",
+            otherReason: "மற்றவை (காரணத்தைக் கூறவும்)",
+            cancel: "ரத்துசெய்",
+            enterReason: "தாமதத்திற்கான குறிப்பிட்ட காரணத்தை உள்ளிடவும்:",
+            maintTitle: "பராமரிப்பு கோரிக்கை",
+            maintDesc: "எதை சரிசெய்ய வேண்டும்?",
+            brakeIssue: "பிரேக் பிரச்சனை",
+            engineNoise: "என்ஜின் சத்தம்",
+            acNotCooling: "ஏசி குளிரூட்டவில்லை",
+            tireIssue: "டயர் பிரச்சனை",
+            seatBroken: "இருக்கை உடைந்துள்ளது",
+            lightsMalfunction: "விளக்குகள் எரியவில்லை",
+            expenseTitle: "எரிபொருள் / செலவு பதிவு",
+            expenseDesc: "உங்கள் எரிபொருள் மற்றும் பயண செலவுகளைக் கண்காணிக்கவும்.",
+            fuelGas: "எரிபொருள் / எரிவாயு",
+            tollFee: "சுங்க கட்டணம்",
+            quickRepairs: "விரைவான பழுதுபார்ப்புகள்",
+            otherExpenses: "பிற செலவுகள்",
+            amountPl: "தொகை (₹)",
+            detailsPl: "விவரங்கள் (எ.கா. 20லி டீசல், டோல் பெயர்)",
+            submit: "சமர்ப்பி",
+            preTripTitle: "📋 பயணத்திற்கு முந்தைய பாதுகாப்பு சரிபார்ப்பு",
+            preTripDesc: "உங்கள் பயணத்தைத் தொடங்குவதற்கு முன் பின்வருவனவற்றைச் சரிபார்க்கவும்.",
+            chkFuel: "எரிபொருள் / பேட்டரி அளவு போதுமானது",
+            chkTires: "டயர்களின் நிலை மற்றும் அழுத்தம் சரியானது",
+            chkBrakes: "பிரேக்குகள் சோதிக்கப்பட்டு வேலை செய்கின்றன",
+            chkLights: "ஹெட்லைட்கள் மற்றும் இண்டிகேட்டர்கள் வேலை செய்கின்றன",
+            chkDocs: "உரிமம் மற்றும் பேரூந்து ஆவணங்கள் உள்ளன",
+            confirmStart: "உறுதிசெய்து தொடங்கு",
+        }
+    };
+    const t = T[lang] || T.en;
 
     useEffect(() => {
         initFirebase();
@@ -48,6 +183,11 @@ export default function DriverDashboard() {
     const watchId = useRef(null);
     const [db, setDb] = useState(null);
     const [passengers, setPassengers] = useState([]);
+
+    // Registration Feature
+    const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+    const [allDriversList, setAllDriversList] = useState([]);
+    const [driverProfileInfo, setDriverProfileInfo] = useState(null);
 
     // Delay Reporting
     const [showDelayModal, setShowDelayModal] = useState(false);
@@ -335,6 +475,15 @@ export default function DriverDashboard() {
         return () => unsubscribe();
     }, [db]);
 
+    // Fetch all registered drivers
+    useEffect(() => {
+        if (!db) return;
+        const unsub = onSnapshot(collection(db, 'drivers'), (snap) => {
+            setAllDriversList(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+        });
+        return () => unsub();
+    }, [db]);
+
     useEffect(() => {
         initFirebase();
         const firestore = getFirestore();
@@ -349,10 +498,27 @@ export default function DriverDashboard() {
                     return;
                 }
                 setUser(u);
+
                 // Replace history state to prevent back button issues
                 if (typeof window !== 'undefined') {
                     window.history.replaceState(null, '', '/dashboard');
                 }
+
+                // Check Driver Registration
+                const checkReg = async () => {
+                    try {
+                        const docSnap = await getDoc(doc(firestore, 'drivers', u.uid));
+                        if (!docSnap.exists()) {
+                            setShowRegistrationModal(true);
+                        } else {
+                            const data = docSnap.data();
+                            setDriverProfileInfo(data);
+                            // Preselect their registered bus only if none selected yet
+                            setBusNumber(prev => prev || data.busNumber || '');
+                        }
+                    } catch (e) { console.error('Error checking driver registration:', e); }
+                };
+                checkReg();
             }
         });
         return () => unsubscribe();
@@ -626,7 +792,7 @@ export default function DriverDashboard() {
 
     return (
         <div style={{ height: '100vh', background: theme.bg, display: 'flex', flexDirection: 'column', color: theme.text, transition: 'background 0.3s' }}>
-            <PreTripModal isOpen={showChecklist} onClose={() => setShowChecklist(false)} onConfirm={confirmStartTrip} />
+            <PreTripModal isOpen={showChecklist} onClose={() => setShowChecklist(false)} onConfirm={confirmStartTrip} t={t} />
 
             {/* Breakdown Mode Overlay */}
             {breakdownMode && (
@@ -657,11 +823,11 @@ export default function DriverDashboard() {
                     </div>
 
                     <div style={{ padding: '20px', background: theme.cardRg, borderTop: `1px solid ${theme.border}` }}>
-                        <p style={{ margin: '0 0 10px 0', fontWeight: 'bold' }}>Instructions:</p>
+                        <p style={{ margin: '0 0 10px 0', fontWeight: 'bold' }}>{t.instrTitle}</p>
                         <ul style={{ margin: 0, paddingLeft: '20px', color: theme.subText }}>
-                            <li>Identify the nearest bus on the map.</li>
-                            <li>Click on a bus to see distance and driver info.</li>
-                            <li>Contact the driver to arrange student pickup.</li>
+                            <li>{t.inst1}</li>
+                            <li>{t.inst2}</li>
+                            <li>{t.inst3}</li>
                         </ul>
                     </div>
                 </div>
@@ -670,46 +836,67 @@ export default function DriverDashboard() {
             {isMaintenance ? (
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px', textAlign: 'center' }}>
                     <div style={{ fontSize: '64px', marginBottom: '24px' }}>🚧</div>
-                    <h1 style={{ fontSize: '28px', color: '#c2410c', margin: '0 0 16px 0' }}>Under Maintenance</h1>
-                    <button onClick={() => setBusNumber('')} style={{ marginTop: '32px', padding: '12px 24px', background: '#fff7ed', border: '2px solid #fdba74', color: '#c2410c', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>Choose Another Bus</button>
-                    <button onClick={handleLogout} style={{ marginTop: '16px', background: 'none', border: 'none', color: theme.subText, textDecoration: 'underline', cursor: 'pointer' }}>Logout</button>
+                    <h1 style={{ fontSize: '28px', color: '#c2410c', margin: '0 0 16px 0' }}>{t.underMaint}</h1>
+                    <button onClick={() => setBusNumber('')} style={{ marginTop: '32px', padding: '12px 24px', background: '#fff7ed', border: '2px solid #fdba74', color: '#c2410c', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>{t.chooseAnother}</button>
+                    <button onClick={handleLogout} style={{ marginTop: '16px', background: 'none', border: 'none', color: theme.subText, textDecoration: 'underline', cursor: 'pointer' }}>{t.logout}</button>
                 </div>
             ) : (
                 <>
+                    {/* License Expiry Banner */}
+                    {driverProfileInfo?.licenseExpiry && (new Date(driverProfileInfo.licenseExpiry) - new Date()) / (1000 * 60 * 60 * 24) <= 60 && (new Date(driverProfileInfo.licenseExpiry) - new Date()) >= 0 && (
+                        <div style={{ background: '#fef2f2', borderBottom: '2px solid #ef4444', padding: '12px 20px', display: 'flex', alignItems: 'center', gap: '12px', color: '#b91c1c' }}>
+                            <span style={{ fontSize: '20px' }}>⚠️</span>
+                            <div>
+                                <strong style={{ display: 'block' }}>License Expiring Soon</strong>
+                                <span style={{ fontSize: '13px' }}>Your license expires on {new Date(driverProfileInfo.licenseExpiry).toLocaleDateString()}. Please renew it prior to expiry.</span>
+                            </div>
+                        </div>
+                    )}
                     {/* Header */}
                     <div className="driver-header" style={{
                         background: theme.cardRg, padding: '15px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                         borderBottom: `1px solid ${theme.border}`, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)'
                     }}>
                         <div>
-                            <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700' }}>Campus Transit</h1>
+                            <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '700' }}>{t.app}</h1>
                             <div className="driver-header-info" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <span style={{ fontSize: '14px', color: theme.highlight, fontWeight: 'bold' }}>
-                                    👋 Hi, {user?.displayName || 'Driver'}
+                                    👋 {t.hi} {driverProfileInfo?.name || user?.displayName || 'Driver'}
                                 </span>
                             </div>
                         </div>
 
                         <div className="driver-header-actions stack-mobile" style={{ display: 'flex', gap: '10px' }}>
                             <button
+                                title={t.logout}
                                 onClick={handleLogout}
                                 style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}
                             >
-                                Logout
+                                {t.logout}
                             </button>
                             <button
+                                title="Toggle Language"
+                                onClick={toggleLang}
+                                style={{ background: 'transparent', border: `1px solid ${theme.border}`, color: theme.text, padding: '8px', borderRadius: '8px', cursor: 'pointer', display: 'flex', fontWeight: 'bold' }}
+                            >
+                                {lang === 'en' ? 'த' : 'EN'}
+                            </button>
+                            <button
+                                title="Toggle Theme"
                                 onClick={() => setDarkMode(!darkMode)}
                                 style={{ background: 'transparent', border: `1px solid ${theme.border}`, color: theme.text, padding: '8px', borderRadius: '8px', cursor: 'pointer', display: 'flex' }}
                             >
                                 {darkMode ? '☀️' : '🌙'}
                             </button>
                             <button
+                                title={t.showQR}
                                 onClick={() => setShowQR(true)}
                                 style={{ background: theme.highlight, color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: '600', cursor: 'pointer' }}
                             >
-                                📱 Show QR
+                                📱 {t.showQR}
                             </button>
                             <button
+                                title="View Passengers"
                                 onClick={() => setShowPassengers(!showPassengers)}
                                 style={{ background: darkMode ? 'rgba(255,255,255,0.1)' : '#f1f5f9', padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: '600', color: theme.text, border: 'none', cursor: 'pointer', position: 'relative' }}
                             >
@@ -762,9 +949,9 @@ export default function DriverDashboard() {
                                     }}
                                 >
                                     <div>
-                                        <div style={{ fontSize: '12px', opacity: 0.8, textTransform: 'uppercase', fontWeight: 'bold' }}>Next Stop</div>
+                                        <div style={{ fontSize: '12px', opacity: 0.8, textTransform: 'uppercase', fontWeight: 'bold' }}>{t.nextStop}</div>
                                         <div style={{ fontSize: '20px', fontWeight: 'bold' }}>{nextStop.name}</div>
-                                        <div style={{ fontSize: '14px' }}>Expected: {nextStop.time || '--:--'}</div>
+                                        <div style={{ fontSize: '14px' }}>{t.expected} {nextStop.time || '--:--'}</div>
                                     </div>
                                     <button
                                         onClick={handleNextStop}
@@ -774,7 +961,7 @@ export default function DriverDashboard() {
                                             cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px'
                                         }}
                                     >
-                                        Next Stop ➡️
+                                        {t.nextStopBtn}
                                     </button>
                                 </motion.div>
                             )}
@@ -844,7 +1031,25 @@ export default function DriverDashboard() {
                                 <div style={{ position: 'relative' }}>
                                     <select
                                         value={busNumber}
-                                        onChange={(e) => setBusNumber(e.target.value)}
+                                        onChange={async (e) => {
+                                            const newBus = e.target.value;
+                                            setBusNumber(newBus);
+                                            // Check if bus is statically registered to someone else
+                                            const registeredDriver = allDriversList.find(d => d.busNumber === newBus && d.id !== user?.uid);
+                                            if (registeredDriver && db) {
+                                                try {
+                                                    await addDoc(collection(db, 'admin_notifications'), {
+                                                        type: 'BUS_OVERRIDE_ALERT',
+                                                        driverName: user?.displayName || user?.email || 'Driver',
+                                                        busNumber: newBus,
+                                                        originalDriver: registeredDriver.name || 'Another Driver',
+                                                        message: `${user?.displayName || 'Driver'} selected Bus ${newBus}, which is statically registered to ${registeredDriver.name}`,
+                                                        status: 'unread',
+                                                        timestamp: serverTimestamp()
+                                                    });
+                                                } catch (err) { console.error("Could not notify admin", err); }
+                                            }
+                                        }}
                                         style={{
                                             appearance: 'none',
                                             background: theme.cardRg, border: `1px solid ${theme.border}`, padding: '16px', borderRadius: '16px',
@@ -911,20 +1116,20 @@ export default function DriverDashboard() {
                         )}
 
 
-                        {/* Action Button */}
                         <div className="slide-button-container action-buttons-container" style={{ width: '100%', maxWidth: '300px', zIndex: 10, display: 'flex', flexDirection: 'column', gap: '12px' }}>
                             {!isActive ? (
                                 busNumber ? (
-                                    <SlideButton key="start" type="start" onSlideSuccess={handleBeforeStart} />
+                                    <SlideButton key="start" type="start" onSlideSuccess={handleBeforeStart} label={t.startTrip} />
                                 ) : (
-                                    <div style={{ textAlign: 'center', padding: '16px', background: theme.cardRg, borderRadius: '16px', color: theme.subText }}>Please Select a Bus Above</div>
+                                    <div style={{ textAlign: 'center', padding: '16px', background: theme.cardRg, borderRadius: '16px', color: theme.subText }}>{t.selectBus}</div>
                                 )
                             ) : (
                                 <>
-                                    <SlideButton key="end" type="end" onSlideSuccess={() => toggleTrip(false)} />
+                                    <SlideButton key="end" type="end" onSlideSuccess={() => toggleTrip(false)} label={t.endTrip} />
 
                                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px', width: '100%' }}>
                                         <motion.button
+                                            title="Report Delay"
                                             whileTap={{ scale: 0.95 }}
                                             onClick={() => setShowDelayModal(true)}
                                             className="action-button"
@@ -935,9 +1140,10 @@ export default function DriverDashboard() {
                                                 boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', cursor: 'pointer'
                                             }}
                                         >
-                                            <span>⏳</span> Delay
+                                            <span>⏳</span> {t.delay}
                                         </motion.button>
                                         <motion.button
+                                            title="Request Maintenance"
                                             whileTap={{ scale: 0.95 }}
                                             onClick={() => setShowMaintenanceModal(true)}
                                             className="action-button"
@@ -948,9 +1154,10 @@ export default function DriverDashboard() {
                                                 boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', cursor: 'pointer'
                                             }}
                                         >
-                                            <span>🛠️</span> Fix
+                                            <span>🛠️</span> {t.fix}
                                         </motion.button>
                                         <motion.button
+                                            title="Log Fuel / Expense"
                                             whileTap={{ scale: 0.95 }}
                                             onClick={() => setShowExpenseModal(true)}
                                             style={{
@@ -960,10 +1167,11 @@ export default function DriverDashboard() {
                                                 boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', cursor: 'pointer'
                                             }}
                                         >
-                                            <span>⛽</span> Fuel
+                                            <span>⛽</span> {t.fuel}
                                         </motion.button>
                                     </div>
                                     <motion.button
+                                        title="Report Breakdown"
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => {
                                             if (confirm("Report Breakdown and enter Emergency Mode?")) {
@@ -978,9 +1186,10 @@ export default function DriverDashboard() {
                                             cursor: 'pointer', border: '2px solid #fecaca'
                                         }}
                                     >
-                                        <span>🚨</span> REPORT BREAKDOWN
+                                        <span>🚨</span> {t.breakdown}
                                     </motion.button>
                                     <motion.button
+                                        title="Report Found Item"
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => setShowFoundModal(true)}
                                         style={{
@@ -990,7 +1199,7 @@ export default function DriverDashboard() {
                                             cursor: 'pointer'
                                         }}
                                     >
-                                        <span>🔎</span> Report Found Item
+                                        <span>🔎</span> {t.foundItem}
                                     </motion.button>
                                 </>
                             )}
@@ -1009,7 +1218,7 @@ export default function DriverDashboard() {
                                         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px'
                                     }}
                                 >
-                                    📣 Quick Alert
+                                    {t.quickAlert}
                                 </motion.button>
                                 <motion.button
                                     whileTap={{ scale: 0.95 }}
@@ -1021,7 +1230,7 @@ export default function DriverDashboard() {
                                         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px'
                                     }}
                                 >
-                                    ⭐ My Performance
+                                    {t.performance}
                                 </motion.button>
                             </div>
                         )}
@@ -1168,30 +1377,35 @@ export default function DriverDashboard() {
                                     className="delay-modal"
                                     style={{ background: theme.cardRg, width: '100%', maxWidth: '340px', borderRadius: '24px', padding: '24px', border: `1px solid ${theme.border}` }}
                                 >
-                                    <h2 style={{ margin: '0 0 8px 0', fontSize: '20px', color: theme.text }}>Report a Delay</h2>
-                                    <p style={{ color: theme.subText, fontSize: '14px', marginBottom: '20px' }}>Notify the admin about late arrival.</p>
+                                    <h2 style={{ margin: '0 0 8px 0', fontSize: '20px', color: theme.text }}>{t.delayTitle}</h2>
+                                    <p style={{ color: theme.subText, fontSize: '14px', marginBottom: '20px' }}>{t.delayDesc}</p>
 
                                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '20px' }}>
-                                        {['Heavy Traffic', 'Breakdown', 'Weather', 'Accident'].map(reason => (
+                                        {[
+                                            { key: 'Heavy Traffic', label: t.heavyTraffic },
+                                            { key: 'Breakdown', label: t.breakdownDelay },
+                                            { key: 'Weather', label: t.weatherDelay },
+                                            { key: 'Accident', label: t.accident }
+                                        ].map(reason => (
                                             <button
-                                                key={reason}
-                                                onClick={() => handleReportDelay(reason)}
+                                                key={reason.key}
+                                                onClick={() => handleReportDelay(reason.key)}
                                                 style={{ padding: '12px', borderRadius: '12px', border: `1px solid ${theme.border}`, background: 'transparent', color: theme.text, fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}
                                             >
-                                                {reason}
+                                                {reason.label}
                                             </button>
                                         ))}
                                         <button
                                             onClick={() => {
-                                                const reason = prompt("Enter specific reason for delay:");
+                                                const reason = prompt(t.enterReason);
                                                 if (reason && reason.trim()) handleReportDelay(reason.trim());
                                             }}
                                             style={{ padding: '12px', borderRadius: '12px', border: `1px solid ${theme.border}`, background: 'transparent', color: theme.text, fontSize: '13px', fontWeight: '600', cursor: 'pointer', gridColumn: '1 / -1' }}
                                         >
-                                            Others (Custom Reason)
+                                            {t.otherReason}
                                         </button>
                                     </div>
-                                    <button onClick={() => setShowDelayModal(false)} style={{ width: '100%', padding: '12px', background: theme.bg, color: theme.subText, border: 'none', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>Cancel</button>
+                                    <button onClick={() => setShowDelayModal(false)} style={{ width: '100%', padding: '12px', background: theme.bg, color: theme.subText, border: 'none', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>{t.cancel}</button>
                                 </motion.div>
                             </motion.div>
                         )}
@@ -1208,16 +1422,23 @@ export default function DriverDashboard() {
                                     initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }}
                                     style={{ background: theme.cardRg, width: '100%', maxWidth: '340px', borderRadius: '24px', padding: '24px', border: `1px solid ${theme.border}` }}
                                 >
-                                    <h2 style={{ margin: '0 0 8px 0', fontSize: '20px', color: theme.text }}>Request Maintenance</h2>
-                                    <p style={{ color: theme.subText, fontSize: '14px', marginBottom: '20px' }}>What needs fixing?</p>
+                                    <h2 style={{ margin: '0 0 8px 0', fontSize: '20px', color: theme.text }}>{t.maintTitle}</h2>
+                                    <p style={{ color: theme.subText, fontSize: '14px', marginBottom: '20px' }}>{t.maintDesc}</p>
                                     <div style={{ display: 'grid', gap: '10px', marginBottom: '16px' }}>
-                                        {['Brake Issue', 'Engine Noise', 'AC Not Cooling', 'Tire Issue', 'Seat Broken', 'Lights Malfunction'].map(issue => (
-                                            <button key={issue} onClick={() => handleReportMaintenance(issue)} style={{ padding: '12px', borderRadius: '12px', border: `1px solid ${theme.border}`, background: 'transparent', color: theme.text, fontSize: '13px', fontWeight: '600', cursor: 'pointer', textAlign: 'left' }}>
-                                                🔧 {issue}
+                                        {[
+                                            { key: 'Brake Issue', label: t.brakeIssue },
+                                            { key: 'Engine Noise', label: t.engineNoise },
+                                            { key: 'AC Not Cooling', label: t.acNotCooling },
+                                            { key: 'Tire Issue', label: t.tireIssue },
+                                            { key: 'Seat Broken', label: t.seatBroken },
+                                            { key: 'Lights Malfunction', label: t.lightsMalfunction }
+                                        ].map(issue => (
+                                            <button key={issue.key} onClick={() => handleReportMaintenance(issue.key)} style={{ padding: '12px', borderRadius: '12px', border: `1px solid ${theme.border}`, background: 'transparent', color: theme.text, fontSize: '13px', fontWeight: '600', cursor: 'pointer', textAlign: 'left' }}>
+                                                🔧 {issue.label}
                                             </button>
                                         ))}
                                     </div>
-                                    <button onClick={() => setShowMaintenanceModal(false)} style={{ width: '100%', padding: '12px', background: theme.bg, color: theme.subText, border: 'none', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>Cancel</button>
+                                    <button onClick={() => setShowMaintenanceModal(false)} style={{ width: '100%', padding: '12px', background: theme.bg, color: theme.subText, border: 'none', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>{t.cancel}</button>
                                 </motion.div>
                             </motion.div>
                         )}
@@ -1263,23 +1484,23 @@ export default function DriverDashboard() {
                                     initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }}
                                     style={{ background: theme.cardRg, width: '100%', maxWidth: '340px', borderRadius: '24px', padding: '24px', border: `1px solid ${theme.border}` }}
                                 >
-                                    <h2 style={{ margin: '0 0 8px 0', fontSize: '20px', color: theme.text }}>Log Fuel / Expense</h2>
-                                    <p style={{ color: theme.subText, fontSize: '14px', marginBottom: '20px' }}>Keep track of your fuel and trip expenses.</p>
+                                    <h2 style={{ margin: '0 0 8px 0', fontSize: '20px', color: theme.text }}>{t.expenseTitle}</h2>
+                                    <p style={{ color: theme.subText, fontSize: '14px', marginBottom: '20px' }}>{t.expenseDesc}</p>
                                     <form onSubmit={(e) => {
                                         e.preventDefault();
                                         handleReportExpense(e.target.type.value, e.target.amount.value, e.target.desc.value);
                                     }}>
                                         <select name="type" required style={{ width: '100%', padding: '12px', borderRadius: '12px', marginBottom: '10px', border: `1px solid ${theme.border}`, background: theme.bg, color: theme.text }}>
-                                            <option value="Fuel">Fuel / Gas</option>
-                                            <option value="Toll">Toll Fee</option>
-                                            <option value="Maintenance">Quick Repairs</option>
-                                            <option value="Other">Other Expenses</option>
+                                            <option value="Fuel">{t.fuelGas}</option>
+                                            <option value="Toll">{t.tollFee}</option>
+                                            <option value="Maintenance">{t.quickRepairs}</option>
+                                            <option value="Other">{t.otherExpenses}</option>
                                         </select>
-                                        <input name="amount" type="number" step="0.01" min="0" placeholder="Amount (₹)" required style={{ width: '100%', padding: '12px', borderRadius: '12px', marginBottom: '10px', border: `1px solid ${theme.border}`, background: theme.bg, color: theme.text }} />
-                                        <textarea name="desc" placeholder="Details (e.g. 20L Diesel, Toll Booth name)" required style={{ width: '100%', padding: '12px', borderRadius: '12px', marginBottom: '16px', border: `1px solid ${theme.border}`, background: theme.bg, color: theme.text, minHeight: '80px', resize: 'none' }} />
+                                        <input name="amount" type="number" step="0.01" min="0" placeholder={t.amountPl} required style={{ width: '100%', padding: '12px', borderRadius: '12px', marginBottom: '10px', border: `1px solid ${theme.border}`, background: theme.bg, color: theme.text }} />
+                                        <textarea name="desc" placeholder={t.detailsPl} required style={{ width: '100%', padding: '12px', borderRadius: '12px', marginBottom: '16px', border: `1px solid ${theme.border}`, background: theme.bg, color: theme.text, minHeight: '80px', resize: 'none' }} />
                                         <div style={{ display: 'flex', gap: '10px' }}>
-                                            <button type="button" onClick={() => setShowExpenseModal(false)} style={{ flex: 1, padding: '12px', background: theme.bg, color: theme.subText, border: 'none', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>Cancel</button>
-                                            <button type="submit" style={{ flex: 1, padding: '12px', background: '#10b981', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>Submit</button>
+                                            <button type="button" onClick={() => setShowExpenseModal(false)} style={{ flex: 1, padding: '12px', background: theme.bg, color: theme.subText, border: 'none', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>{t.cancel}</button>
+                                            <button type="submit" style={{ flex: 1, padding: '12px', background: '#10b981', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>{t.submit}</button>
                                         </div>
                                     </form>
                                 </motion.div>
@@ -1404,6 +1625,65 @@ export default function DriverDashboard() {
                                             {f.comment && <p style={{ margin: 0, fontSize: '13px', color: theme.subText, fontStyle: 'italic' }}>"{f.comment}"</p>}
                                         </div>
                                     ))}
+                                </motion.div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* Driver First-Login Registration Modal */}
+                    <AnimatePresence>
+                        {showRegistrationModal && (
+                            <motion.div
+                                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                                style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(5px)', zIndex: 5000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}
+                            >
+                                <motion.div
+                                    initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }}
+                                    style={{ background: theme.cardRg, width: '100%', maxWidth: '400px', borderRadius: '24px', padding: '32px', border: `1px solid ${theme.border}`, boxShadow: '0 20px 25px -5px rgba(0,0,0,0.2)' }}
+                                >
+                                    <h2 style={{ margin: '0 0 8px 0', fontSize: '24px', color: theme.text }}>Driver Registration</h2>
+                                    <p style={{ color: theme.subText, fontSize: '14px', marginBottom: '24px' }}>Please complete your profile to continue.</p>
+                                    <form onSubmit={async (e) => {
+                                        e.preventDefault();
+                                        const name = e.target.name.value;
+                                        const bus = e.target.bus.value;
+                                        const licenseNum = e.target.licenseNum.value;
+                                        const licenseExp = e.target.licenseExp.value;
+
+                                        try {
+                                            await setDoc(doc(db, 'drivers', user.uid), {
+                                                name,
+                                                busNumber: bus,
+                                                licenseNumber: licenseNum,
+                                                licenseExpiry: licenseExp,
+                                                email: user.email,
+                                                registeredAt: serverTimestamp()
+                                            });
+                                            setBusNumber(bus);
+                                            setShowRegistrationModal(false);
+                                            alert("Registration complete! Welcome.");
+                                        } catch (err) {
+                                            alert("Failed to register: " + err.message);
+                                        }
+                                    }}>
+                                        <div style={{ marginBottom: '16px' }}>
+                                            <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 'bold' }}>Full Name</label>
+                                            <input name="name" defaultValue={user?.displayName || ''} required style={{ width: '100%', padding: '12px', borderRadius: '12px', border: `1px solid ${theme.border}`, background: theme.bg, color: theme.text }} />
+                                        </div>
+                                        <div style={{ marginBottom: '16px' }}>
+                                            <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 'bold' }}>Primary Bus Number</label>
+                                            <input name="bus" required placeholder="e.g. 101 or 3A" style={{ width: '100%', padding: '12px', borderRadius: '12px', border: `1px solid ${theme.border}`, background: theme.bg, color: theme.text }} />
+                                        </div>
+                                        <div style={{ marginBottom: '16px' }}>
+                                            <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 'bold' }}>License Number</label>
+                                            <input name="licenseNum" required placeholder="DL-XXX-YYYY" style={{ width: '100%', padding: '12px', borderRadius: '12px', border: `1px solid ${theme.border}`, background: theme.bg, color: theme.text }} />
+                                        </div>
+                                        <div style={{ marginBottom: '24px' }}>
+                                            <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 'bold' }}>License Expiry Date</label>
+                                            <input type="date" name="licenseExp" required style={{ width: '100%', padding: '12px', borderRadius: '12px', border: `1px solid ${theme.border}`, background: theme.bg, color: theme.text }} />
+                                        </div>
+                                        <button type="submit" style={{ width: '100%', padding: '14px', background: theme.highlight, color: 'white', border: 'none', borderRadius: '12px', fontWeight: 'bold', fontSize: '16px', cursor: 'pointer' }}>Complete Registration</button>
+                                    </form>
                                 </motion.div>
                             </motion.div>
                         )}
