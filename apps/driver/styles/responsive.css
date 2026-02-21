@@ -1,0 +1,722 @@
+/* TRANS-IT Driver/Admin Panel - Responsive Styles */
+
+/* Mobile First Approach */
+
+/* ============================================
+   GLOBAL RESPONSIVE UTILITIES
+   ============================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+/* ============================================
+   MOBILE STYLES (Default - 320px to 767px)
+   ============================================ */
+
+/* Admin Panel Header */
+.admin-header {
+    padding: 12px 16px !important;
+    flex-wrap: wrap;
+    gap: 12px !important;
+}
+
+.admin-header h1 {
+    font-size: 20px !important;
+}
+
+.admin-header-actions {
+    width: 100%;
+    justify-content: space-between !important;
+    gap: 8px !important;
+}
+
+/* Tab Navigation */
+.tab-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+}
+
+.tab-container::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+.tab-list {
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    padding: 12px 16px !important;
+    min-width: max-content;
+}
+
+.tab-button {
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+    white-space: nowrap;
+    min-width: auto !important;
+}
+
+/* Stats Cards */
+.stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding: 16px !important;
+}
+
+.stat-card {
+    padding: 16px !important;
+}
+
+.stat-card h3 {
+    font-size: 14px !important;
+}
+
+.stat-card .stat-value {
+    font-size: 24px !important;
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    min-width: 600px !important;
+    font-size: 13px !important;
+}
+
+th {
+    padding: 12px 16px !important;
+    font-size: 12px !important;
+}
+
+td {
+    padding: 12px 16px !important;
+    font-size: 13px !important;
+}
+
+/* Forms */
+.form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    font-size: 16px !important;
+    /* Prevents iOS zoom */
+    padding: 12px 14px !important;
+}
+
+.form-label {
+    font-size: 13px !important;
+}
+
+/* Buttons */
+.btn {
+    min-height: 44px;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+}
+
+.btn-group {
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+.btn-group .btn {
+    width: 100% !important;
+}
+
+/* Map Container */
+.admin-map-container {
+    height: 50vh !important;
+    min-height: 300px !important;
+}
+
+/* Driver Dashboard */
+.driver-dashboard {
+    padding: 16px !important;
+}
+
+.trip-info-card {
+    padding: 16px !important;
+    margin-bottom: 16px !important;
+}
+
+.trip-actions {
+    flex-direction: column !important;
+    gap: 10px !important;
+}
+
+.trip-actions button {
+    width: 100% !important;
+}
+
+/* Speedometer */
+.speedometer {
+    width: 140px !important;
+    height: 140px !important;
+    margin: 0 auto;
+}
+
+/* Search/Filter */
+.search-container {
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 16px !important;
+}
+
+.search-input {
+    width: 100% !important;
+}
+
+/* Modal/Dialog */
+.modal-overlay {
+    padding: 16px !important;
+}
+
+.modal-content {
+    width: 95% !important;
+    max-width: 100% !important;
+    max-height: 85vh !important;
+    overflow-y: auto;
+    padding: 20px !important;
+}
+
+.modal-header h2 {
+    font-size: 18px !important;
+}
+
+/* Announcements */
+.announcement-card {
+    padding: 16px !important;
+    margin-bottom: 12px !important;
+}
+
+.announcement-title {
+    font-size: 16px !important;
+}
+
+/* Delay Reports */
+.delay-report-card {
+    padding: 16px !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+}
+
+.delay-report-actions {
+    width: 100%;
+    justify-content: flex-end !important;
+}
+
+/* User List */
+.user-list-header {
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 16px !important;
+}
+
+.user-list-header h3 {
+    font-size: 18px !important;
+}
+
+/* Route Management */
+.route-card {
+    padding: 16px !important;
+}
+
+.route-stops-list {
+    max-height: 40vh !important;
+}
+
+/* ============================================
+   TABLET STYLES (768px to 1023px)
+   ============================================ */
+
+@media (min-width: 768px) {
+
+    /* Header */
+    .admin-header {
+        padding: 16px 32px !important;
+        flex-wrap: nowrap;
+    }
+
+    .admin-header h1 {
+        font-size: 24px !important;
+    }
+
+    .admin-header-actions {
+        width: auto;
+        gap: 12px !important;
+    }
+
+    /* Tabs */
+    .tab-container {
+        overflow-x: visible !important;
+    }
+
+    .tab-list {
+        flex-wrap: wrap !important;
+        padding: 16px 32px !important;
+        gap: 12px !important;
+    }
+
+    .tab-button {
+        padding: 12px 20px !important;
+        font-size: 14px !important;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+        padding: 24px !important;
+    }
+
+    .stat-card {
+        padding: 20px !important;
+    }
+
+    .stat-card .stat-value {
+        font-size: 28px !important;
+    }
+
+    /* Tables */
+    table {
+        font-size: 14px !important;
+    }
+
+    th {
+        padding: 14px 20px !important;
+        font-size: 13px !important;
+    }
+
+    td {
+        padding: 14px 20px !important;
+        font-size: 14px !important;
+    }
+
+    /* Forms */
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    .form-grid .full-width {
+        grid-column: 1 / -1 !important;
+    }
+
+    /* Buttons */
+    .btn-group {
+        flex-direction: row !important;
+        gap: 12px !important;
+    }
+
+    .btn-group .btn {
+        width: auto !important;
+    }
+
+    /* Map */
+    .admin-map-container {
+        height: 60vh !important;
+        min-height: 400px !important;
+    }
+
+    /* Driver Dashboard */
+    .driver-dashboard {
+        padding: 24px !important;
+    }
+
+    .trip-actions {
+        flex-direction: row !important;
+        gap: 12px !important;
+    }
+
+    .trip-actions button {
+        width: auto !important;
+    }
+
+    /* Speedometer */
+    .speedometer {
+        width: 160px !important;
+        height: 160px !important;
+    }
+
+    /* Search/Filter */
+    .search-container {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        padding: 20px 32px !important;
+    }
+
+    .search-input {
+        width: 300px !important;
+    }
+
+    /* Modal */
+    .modal-content {
+        width: 85% !important;
+        max-width: 700px !important;
+        padding: 28px !important;
+    }
+
+    .modal-header h2 {
+        font-size: 20px !important;
+    }
+
+    /* Delay Reports */
+    .delay-report-card {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        padding: 20px !important;
+    }
+
+    .delay-report-actions {
+        width: auto;
+    }
+
+    /* User List */
+    .user-list-header {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        padding: 20px 32px !important;
+    }
+
+    /* Route Management */
+    .route-stops-list {
+        max-height: 50vh !important;
+    }
+}
+
+/* ============================================
+   DESKTOP STYLES (1024px and above)
+   ============================================ */
+
+@media (min-width: 1024px) {
+
+    /* Header */
+    .admin-header {
+        padding: 20px 48px !important;
+    }
+
+    .admin-header h1 {
+        font-size: 28px !important;
+    }
+
+    /* Tabs */
+    .tab-list {
+        padding: 20px 48px !important;
+        gap: 16px !important;
+    }
+
+    .tab-button {
+        padding: 14px 24px !important;
+        font-size: 15px !important;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 20px !important;
+        padding: 32px 48px !important;
+    }
+
+    .stat-card {
+        padding: 24px !important;
+    }
+
+    .stat-card .stat-value {
+        font-size: 32px !important;
+    }
+
+    /* Tables */
+    table {
+        font-size: 15px !important;
+    }
+
+    th {
+        padding: 16px 24px !important;
+        font-size: 14px !important;
+    }
+
+    td {
+        padding: 16px 24px !important;
+        font-size: 15px !important;
+    }
+
+    /* Forms */
+    .form-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 20px !important;
+    }
+
+    /* Map */
+    .admin-map-container {
+        height: 70vh !important;
+        min-height: 500px !important;
+    }
+
+    /* Driver Dashboard */
+    .driver-dashboard {
+        padding: 32px 48px !important;
+    }
+
+    /* Speedometer */
+    .speedometer {
+        width: 180px !important;
+        height: 180px !important;
+    }
+
+    /* Search/Filter */
+    .search-container {
+        padding: 24px 48px !important;
+    }
+
+    .search-input {
+        width: 350px !important;
+    }
+
+    /* Modal */
+    .modal-content {
+        width: 75% !important;
+        max-width: 900px !important;
+        padding: 32px !important;
+    }
+
+    .modal-header h2 {
+        font-size: 22px !important;
+    }
+}
+
+/* ============================================
+   LARGE DESKTOP (1440px and above)
+   ============================================ */
+
+@media (min-width: 1440px) {
+    .admin-header {
+        padding: 24px 64px !important;
+    }
+
+    .tab-list {
+        padding: 24px 64px !important;
+    }
+
+    .stats-grid {
+        padding: 40px 64px !important;
+    }
+
+    .driver-dashboard {
+        padding: 40px 64px !important;
+    }
+
+    .search-container {
+        padding: 28px 64px !important;
+    }
+}
+
+/* ============================================
+   LANDSCAPE ORIENTATION (Mobile/Tablet)
+   ============================================ */
+
+@media (max-height: 600px) and (orientation: landscape) {
+    .modal-content {
+        max-height: 90vh !important;
+    }
+
+    .admin-map-container {
+        height: 85vh !important;
+    }
+
+    .route-stops-list {
+        max-height: 60vh !important;
+    }
+}
+
+/* ============================================
+   TOUCH DEVICE OPTIMIZATIONS
+   ============================================ */
+
+@media (hover: none) and (pointer: coarse) {
+
+    button,
+    a,
+    .clickable,
+    .tab-button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    button:hover,
+    a:hover,
+    .tab-button:hover {
+        transform: none !important;
+    }
+
+    button,
+    a,
+    input,
+    select,
+    textarea {
+        -webkit-tap-highlight-color: rgba(59, 130, 246, 0.2);
+    }
+
+    /* Larger scrollbars on touch devices */
+    .table-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+
+    .no-print,
+    .admin-header-actions,
+    .tab-list,
+    button,
+    .modal-overlay {
+        display: none !important;
+    }
+
+    .admin-map-container {
+        height: 400px !important;
+    }
+
+    table {
+        page-break-inside: avoid;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media (prefers-contrast: high) {
+
+    button,
+    input,
+    select,
+    textarea,
+    .tab-button {
+        border: 2px solid currentColor !important;
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.hide-mobile {
+    display: none !important;
+}
+
+@media (min-width: 768px) {
+    .hide-mobile {
+        display: block !important;
+    }
+}
+
+.hide-tablet-up {
+    display: block !important;
+}
+
+@media (min-width: 768px) {
+    .hide-tablet-up {
+        display: none !important;
+    }
+}
+
+.hide-desktop {
+    display: block !important;
+}
+
+@media (min-width: 1024px) {
+    .hide-desktop {
+        display: none !important;
+    }
+}
+
+/* Responsive text */
+.text-responsive {
+    font-size: clamp(13px, 2.5vw, 16px);
+}
+
+.heading-responsive {
+    font-size: clamp(18px, 4vw, 28px);
+}
+
+/* Responsive spacing */
+.padding-responsive {
+    padding: clamp(16px, 3vw, 32px);
+}
+
+.margin-responsive {
+    margin: clamp(12px, 2.5vw, 24px);
+}
+
+/* Container max-width */
+.container-responsive {
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+@media (min-width: 768px) {
+    .container-responsive {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container-responsive {
+        max-width: 1280px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 48px;
+        padding-right: 48px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .container-responsive {
+        max-width: 1440px;
+        padding-left: 64px;
+        padding-right: 64px;
+    }
+}

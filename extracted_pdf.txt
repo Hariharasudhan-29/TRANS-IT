@@ -1,0 +1,297 @@
+Sl.No Boarding Points Time (A.M) 
+01 Kulamangalam Privu 7:20 
+02 Vaagaikulam 7:22 
+03 Panangadi 7:24 
+04 Panangadi Check Post 7:26 
+05 Park town 7:28 
+06 Karupusamy Koil - Kulamangalam 7:30 
+07 Naina Bakery 7:32 
+08 Army Canteen - Thapal Thanthi Nagar 7:34 
+09 AR Hospital - Valluvar Colony 7:36 
+10 Priya Complex - Anna Nagar 7:45 ROUTE: 101 - KULAMANGALAM 
+DRIVER NAME: KARMEGAM - 8778062304 
+
+Sl.No Boarding Points Time (A.M) 
+01 Valar Nagar 7:25 
+02 Uthankudi - Anjalai Nallaennai 7:27 
+03 Preethi Hospital - Uthangudi 7:29 
+04 Meenakshi Mission Hospital-Mattuthavani 7:31 
+05 MGR Busstand - Mattuthavani 7:33 
+06 Sundaram Park - Royal Enfield 7:37 
+07 Gomathipuram 7.38 
+08 Vikram Hospital 7.40 
+09 Karuppayurani 7:42 
+10 PKM School - (Appar School) 7:44 
+11 Kallumedu 7:46 
+12 Sakkimangalam Bridge 7:50 ROUTE: 103 - VALARNAGAR 
+DRIVER NAME: SELVAM – 8807923848 
+
+Sl.No Boarding Points Time (A.M) 
+01 Thirupparankundrum Kovil Bus stop 7.15 
+02 THIRUPARANKUNDRAM PAMBAN NAGAR 7.17 
+03 AVANIYAPURAM POLICE QUARTERS 7.19 
+04 Avaniyapuram 7.21 
+05 Ambedkar Statue - Thiruparankundaram Privu 7.23 
+06 Prasanna Colony 7.25 
+07 Vaikam Periyar Salai Stop 7.28 
+08 Gladway 7.30 
+09 MMC Colony Bus Stop 7.34 
+10 Villapuram - SBI 7.40 
+11 Chinthamani - Pillaiyar Kovil 8.05 ROUTE: 104 – THIRUPARANKUNDRAM 
+DRIVER NAME: JEYAKUMAR-9787899259 
+
+Sl.No Boarding Points Time (A.M) 
+01 Arapalayam 7.35 
+02 MELAPONAGARAM - POLICE STATION 7.37 
+03 ESI - Ma Palayam 7:42 
+04 Sethupathi School-Simmakkal 7:44 
+05 MODERN LODGE STOP 7.45 
+06 Simmakkal 7:46 
+07 Nelpettai 7:48 
+08 VETRILAI PETTAI 7:50 
+09 Rajmahal - East Veli Street 7:52 
+10 Keelavasal 7:54 
+11 Arasamaram Pillayar Kovil - Kamarajar Salai 7:56 
+12 Gandhi Pottal 7:58 
+13 ICICI bank - Munichalai 8:00 
+14 Ganesh Theatre 8:02 
+15 Nirmala School - Kamarajar Salai 8:04 
+16 Thiyagarajar Arts College-Theppakulam 8.05 DRIVER NAME:CHELLA MANI - 9994372538 ROUTE: 105 – ARAPALAYAM 
+
+Sl.No Boarding Points Time (A.M) 
+01 Utchaparambu Medu 7.30 
+02 Iyer Bungalow 7.35 
+03 Narayanapuram 7.37 
+04 Mariamman Temple - Reserve Line 7.39 
+05 Collector Bunglow 7.41 
+06 Thallakulam 7.43 
+07 Munichalai (PR hospital) 7.50 
+08 Munichalai Signal 7.52 
+09 MLA Office - New Ramnad Road 7.54 
+10 EB Office - New Ramnad Road 7.56 
+11 Amali School - New Ramnad Road 7.58 
+12 Annuppanadi - Cross 8.00 
+13 Iravathanallur 8.05 
+14 Viraganur Bus Stop 8.07 ROUTE: 106 - IYERBUNGALOW 
+DRIVER NAME: PREMKUMAR – 9626229032 
+
+Sl.No Boarding Points Time (A.M) 
+01 Achampathu 7:25 
+02 VIRATTIPATHU 7:27 
+03 HMS Colony 7:29 
+04 T V S RUBBER FACTORY 7:31 
+05 KAALAVASAL (BIG BAZAR) 7:33 
+06 Chokkalinga Nagar Bus Stop 7:35 
+07 Ponmeni 7:37 
+08 RAMNAGAR - K F C 7:39 
+09 Therkku Vasal - Vadamalayan Hospital 7:50 ROUTE: 107 - ACHAMPATHU 
+DRIVER NAME: MADHU SUTHANAN - 9789355123 
+
+Sl.No Boarding Points Time (A.M) 
+01 TVS Nagar 7:35 
+02 Nehru Street - TVS Nagar 7:37 
+03 Jeeva Nagar - TVS Nagar 7:39 
+04 Kaliamman Kovil Stop - Jeeva Nagar 7:41 
+05 Jaihindpuram 7:43 
+06 Jaihindpuram - EB office 7:45 
+07 Villapuram (Poo Market) 7:47 
+08 Avaniyapuram Roundana 7.52 ROUTE: 108 – TVS NAGAR 
+DRIVER NAME: S.ARUNKUMAR-9791757233 
+
+Sl.No Boarding Points Time (A.M) 
+01 KALLANTHIRI 7.20 
+02 APPAN THIRUPATHI 7:22 
+03 VALLABA VIDHYALAYA SCHOOL 7:24 
+04 SUNDARARAJAN PATTI 7:26 
+05 Jankit Nagar - Kadachanendhal 7:28 
+06 KATHAKINARU 7:30 
+07 Kadachanendhal 7:32 
+08 Surya Nagar 7:34 
+09 Kodikulam 7:36 
+10 K.Pudur 7:38 
+11 K.K. Nagar Arch 7:43 
+12 Wakf Board College 7:45 ROUTE: 109 - JANKITNAGAR 
+DRIVER NAME: NAGARAJAN - 9442418255 
+
+Sl.No Boarding Points Time (A.M) 
+01 Manamadurai 7.20 
+02 Rajakambeeram 7.25 
+03 Thiruppachethi 7.30 
+04 Thirupuvanam 7.35 
+05 Silaiman 7.37 
+06 VELAMMAL ENGG. COLLEGE - LKT Nagar 7.45 
+07 Viraganur Ring Road 7.47 ROUTE: 110 - MANAMADURAI 
+DRIVER NAME: SURESHKUMAR - 8754335454 
+
+Sl.No Boarding Points Time (A.M) 
+01 Melur Bus Stand 7:10 
+02 Agriculture College - Vowval Thottam 7:30 
+03 Othakadai 7:32 
+04 Valar Nagar Extension 7:40 DRIVER NAME: KUMAR - 7639588121 ROUTE: 111 - MELUR 
+
+Sl.No Boarding Points Time (A.M) 
+01 Pannakudi 7:20 
+02 VEERAPANDI VIKASA SCHOOL 7:22 
+03 Umachikulam 7:24 
+04 Yadhava College Men 7:26 
+05 Yadhava College Women 7:28 
+06 Thiruppalai-EB Office 7:30 
+07 Thiruppalai - Krishnan Koil 7:32 
+08 Krishna Nagar-Indian Oil 7:34 
+09 Bank Colony - Narayanapuram 7:36 
+10 Narayanapuram 7:38 
+11 Reserve Line 7:45 ROUTE: 112 - UMACHIKULAM 
+DRIVER NAME: MANIKANDAN - 8870686741 
+
+Sl.No Boarding Points Time (A.M) 
+01 ALANGANALUR - BUS STAND 7.10 
+02 Kumaram 7.15 
+03 SIRUVALAI PIRIVU 7.17 
+04 Sivan Kovil 7.20 
+05 EB Office Thinamani Nagar 7.22 
+06 Koodal Nagar 7.24 
+07 Anjal Nagar 7.25 
+08 Maha School - Thee Kathir 7.27 
+09 Aruldass Puram 7.32 
+10 Kailaasa Puram 7.35 
+11 SELLUR KABADI ROUNDANA 7.40 
+12 SELLUR GANAPATHY SILKS 7.45 
+13 Chinthamani Signal 7.47 ROUTE: 113- ALANGANALLUR  
+DRIVER NAME: KARUPPASAMY - 6385783001 
+
+Sl.No Boarding Points Time (A.M) 
+01 B.B. Kulam - Uzhavar Santhai 7:25 
+02 BB Kulam Bus Stop 7:27 
+03 KV School - Lady Doak College 7:29 
+04 OCPM Back Gate (Narimedu) 7:31 
+05 OCPM School - Front Gate 7:33 
+06 Goripalayam 7:39 
+07 Govt Medical  C ollege (Shenoy Nagar) 7:41 
+08 Anna  B us Stand 7:43 
+09 Paalpannai Signal - Aavin 7:45 DRIVER NAME: MURUGAN - 9600912317 ROUTE: 114 – B.B KULAM 
+
+Sl.No Boarding Points Time (A.M) 
+01 Chellampatti - Theni Road 7:05 
+02 Karumathur - Theni Road 7:09 
+03 Munandipatti - Theni Road 7:12 
+04 Checkanurani 7:18 
+05 Rajambadi 7:23 
+06 Pillar Salai Stop 7:25 
+07 SVN College 7:27 
+08 Nagamalai Pudhukottai 7:30 
+09 KMR School-Atchampattu 7:35 ROUTE: 115 – USILAMPATTI 
+DRIVER NAME: RAMA KRISHNAN - 9360817263 
+
+Sl.No Boarding Points Time (A.M) 
+01 Suguna Store - Anna Nagar 7:45 
+02 Ambiga Theatre - Vaigai Colony 7:47 
+03 Vandiyur Bus Stand 7:50 ROUTE: 116 - ANNANAGAR 
+DRIVER NAME: VENKATESHGOPI - 9489035721 
+
+Sl.No Boarding Points Time (A.M) 
+01 THANAKKANKULAM THILAHA BAKERY 7:20 
+02 Thanakkankulam Bus stop 7:22 
+03 Thirunagar 3rd stop 7:24 
+04 THIRUNAGAR 5th STOP 7:26 
+05 THIRUNAGAR 8th STOP 7:28 
+06 Thirunagar 1st Stop 7:30 
+07 Thiruparankundaram Arch 7:32 
+08 Mannar College - Moolakkarai 7:35 
+09 Vasantha nagar 7:43 
+10 Andal Puram 7:45 
+11 Mahal 7:55 
+12 Chinthamani 8.05 ROUTE: 117 - THANAKKANKULAM 
+DRIVER NAME: MUNEESWARAN - 9087513529 
+
+Sl.No Boarding Points Time (A.M) 
+01 Tirumangalam -  Therkutheru 7.10 
+02 THIRUMANGALAM THEVAR STATUE 7.15 
+03 THIRUMANGALAM BUS STAND 7.16 
+04 THIRUMANGALAM RAJAJI STATUE 7.18 
+05 THIRUMANGALAM E.B OFFICE 7.20 
+06 KAPPALUR COLONY 7.25 
+07 Koothiyar Kundu 7.28 
+08 Puliyankulam-Thanakkankulam 7.30 
+09 Thirunagar 2nd stop 7.32 
+10 Harveypatti 7.34 
+11 Pasumalai - CSI industrial school 7.40 
+12 Alagapan Nagar 7.42 
+13 Sappani Kovil - Therkuvasal 7.47 ROUTE: 118-THIRUMANGALAM 
+DRIVER NAME: ANANTHAN - 6383526627 
+
+Sl.No Boarding Points Time (A.M) 
+01 Pykara 7.25 
+02 Palanganatham 7.28 
+03 Crime Branch 7.31 
+04 Villapuram (Jayavillas) 7.35 
+05 Villapuram Arch 7.37 
+06 Vetri Theatre - Villapuram 7.39 
+07 Meenakshi Nagar - Petrol Bunk 7.41 
+08 Padma Theatre - Ganapathy Nagar 7.43 ROUTE: 119 – PASUMALAI 
+DRIVER NAME:  SAKTHIVEL - 9788228271 
+
+Sl.No Boarding Points Time (A.M) 
+01 Narasingam 7:20 
+02 Sai Baba Temple - Gayathri Nagar 7:22 
+03 Surveyor colony (SP Office) 7:30 
+04 Moondrumavadi 7:32 
+05 Alagar Nagar - Bus Stop 7:34 
+06 Apple Store 7:36 
+07 K.Pudur-ITI 7:38 DRIVER NAME: PERIYAKARUPPAN - 9629056384 ROUTE: 120-NARASINGAM 
+
+Sl.No Boarding Points Time (A.M) 
+01 PARAVAI SATHYAMOORTHI NAGAR 7.20 
+02 Paravai - Bus Stop 7.25 
+03 Pepsi Stop - Paravai 7.27 
+04 Paravai Underground Railway Gate 7.30 
+05 Vilangudi- Bus Stop 7.32 
+06 Karisakulam Railway Gate 7.35 
+07 Fatima College 7.37 
+08 Thee Kathir Office 7.38 
+09 Guru Theatre - Aarapalayam 7.40 
+10 AARAPALAYAM - AGARWAL EYE HOSPITAL 7.44 
+11 Gnanaolipuram Church Stop 7.45 
+12 Mathi Theatre 7.47 
+13 FISH MARKET - BSNL OFFICE (Karimedu) 7.50 
+14 Janakiram  Hotel  – Petchiyamman  Padithurai 7.52 ROUTE: 121-PARAVAI 
+DRIVER NAME: MUTHUKUMAR – 9790120282 
+
+Sl.No Boarding Points Time (A.M) 
+01 NATARAJ THEATRE 7:35 
+02 PRC HEAD OFFICE 7:37 
+03 ELLIS NAGAR SIGNAL 7:39 
+04 ELLIS NAGAR- BSNL OFFICE 7:41 
+05 ELLIS NAGAR - BUS STAND 7:43 
+06 PERIYAR KPS HOTEL 7:45 
+07 Thavuttusanthai Bus Stop 7:55 
+08 Kaliamman Kovil Stop - St.Joseph School 7:57 ROUTE: 122 – NATARAJ THEATRE 
+DRIVER NAME: R. ARUN KUMAR- 9894303246 
+
+Sl.No Boarding Points Time (A.M) 
+01 Chikkandarchavadi 7:20 
+02 Uzhavar Santhi - Aanaiyur 7:25 
+03 Aanaiyur Bus Stand 7:27 
+04 Aalankulam 7:29 
+05 M.G. Nagar 7:31 
+06 Krishnapuram Colony 7:33 
+07 Melamadai signal 7:50 ROUTE: 123 - CHIKKANDARCHAVADI 
+DRIVER NAME: PRABHU-9597519724 
+
+Sl.No Boarding Points Time (A.M) 
+01 SAMAYANALLUR - OORMECHIKULAM 7.10 
+02 SAMAYANALLUR - BUS STOP 7.12 
+03 Mellakal Bypass 7.16 
+04 Thuvariman 7.18 
+05 QUEEN-MEERA SCHOOL 7.20 
+06 SEVENTHDAY SCHOOL 7.22 
+07 Kochadai (Anantha Super Market) 7.24 
+08 Kochadai - Muthaiah Temple 7.26 
+09 Passport office, Kochadai 7.28 
+10 Fenner 7.30 
+11 Fenner - Vijaya Hospital 7.32 
+12 Arasaradi 7.34 
+13 Madura Coats 7.36 
+14 Munichalai Signal 7.38 
+15 Keerathurai Railway Gate 7.40 ROUTE: 124 - SAMAYANALUR 
+DRIVER NAME: RAJASEKARAN - 9751744040 
+

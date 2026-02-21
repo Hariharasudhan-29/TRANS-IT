@@ -1,0 +1,7 @@
+node_modules/
+.next/
+.env*
+firebase-service-account.json
+trans-it-4b9e4-firebase-adminsdk-fbsvc-ebb85ebf7b.json
+.DS_Store
+.turbo/

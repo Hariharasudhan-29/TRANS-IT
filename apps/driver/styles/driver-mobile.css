@@ -1,0 +1,368 @@
+/* Driver Dashboard - Mobile Responsive Styles */
+
+/* ============================================
+   MOBILE OPTIMIZATIONS (320px - 767px)
+   ============================================ */
+
+@media (max-width: 767px) {
+
+    /* Header */
+    .driver-header {
+        padding: 12px 16px !important;
+        flex-wrap: wrap !important;
+    }
+
+    .driver-header h1 {
+        font-size: 16px !important;
+    }
+
+    .driver-header-info {
+        font-size: 11px !important;
+        gap: 6px !important;
+    }
+
+    .driver-header-actions {
+        width: 100%;
+        margin-top: 12px;
+        justify-content: space-between !important;
+        gap: 8px !important;
+    }
+
+    .driver-header-actions button {
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+        flex: 1;
+    }
+
+    /* Bus Selection */
+    .bus-selection-container {
+        padding: 20px 16px !important;
+    }
+
+    .bus-selection-card {
+        padding: 24px 20px !important;
+        max-width: 100% !important;
+    }
+
+    .bus-selection-card h2 {
+        font-size: 20px !important;
+    }
+
+    .bus-selection-card select {
+        font-size: 16px !important;
+        padding: 14px !important;
+    }
+
+    .bus-selection-card button {
+        font-size: 15px !important;
+        padding: 14px !important;
+    }
+
+    /* Active Trip Info */
+    .trip-info-card {
+        padding: 16px !important;
+        margin: 12px !important;
+    }
+
+    .trip-info-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+
+    .trip-info-title {
+        font-size: 16px !important;
+    }
+
+    .trip-info-stats {
+        flex-direction: column !important;
+        gap: 8px !important;
+        width: 100%;
+    }
+
+    .trip-stat {
+        padding: 10px !important;
+        font-size: 13px !important;
+    }
+
+    /* Action Buttons */
+    .action-buttons-container {
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding: 12px !important;
+    }
+
+    .action-button {
+        width: 100% !important;
+        padding: 12px !important;
+        font-size: 14px !important;
+    }
+
+    /* View Toggle */
+    .view-toggle-container {
+        padding: 12px !important;
+        gap: 8px !important;
+    }
+
+    .view-toggle-button {
+        padding: 10px 14px !important;
+        font-size: 13px !important;
+        flex: 1;
+    }
+
+    /* Speedometer Container */
+    .speedometer-wrapper {
+        padding: 20px 16px !important;
+    }
+
+    /* Map Container */
+    .driver-map-container {
+        height: 50vh !important;
+        min-height: 300px !important;
+    }
+
+    /* Stop Progress */
+    .stop-progress-container {
+        padding: 16px !important;
+    }
+
+    .stop-progress-header {
+        font-size: 14px !important;
+    }
+
+    .stop-item {
+        padding: 12px !important;
+        font-size: 13px !important;
+    }
+
+    .stop-name {
+        font-size: 14px !important;
+    }
+
+    .stop-time {
+        font-size: 11px !important;
+    }
+
+    .stop-number {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 12px !important;
+    }
+
+    /* Slide Button */
+    .slide-button-container {
+        padding: 12px !important;
+    }
+
+    /* Passenger List Modal */
+    .passenger-modal {
+        width: 95% !important;
+        max-width: 100% !important;
+        max-height: 85vh !important;
+        padding: 20px !important;
+    }
+
+    .passenger-modal h2 {
+        font-size: 18px !important;
+    }
+
+    .passenger-item {
+        padding: 12px !important;
+        font-size: 14px !important;
+    }
+
+    /* Delay Modal */
+    .delay-modal {
+        width: 95% !important;
+        max-width: 100% !important;
+        padding: 20px !important;
+    }
+
+    .delay-modal h2 {
+        font-size: 18px !important;
+    }
+
+    .delay-reason-button {
+        padding: 12px !important;
+        font-size: 14px !important;
+    }
+
+    /* QR Code */
+    .qr-container {
+        padding: 20px !important;
+    }
+
+    .qr-code {
+        width: 200px !important;
+        height: 200px !important;
+    }
+
+    /* Speed Warning */
+    .speed-warning {
+        padding: 12px 16px !important;
+        font-size: 13px !important;
+    }
+
+    /* GPS Status */
+    .gps-status {
+        padding: 10px 16px !important;
+        font-size: 12px !important;
+    }
+}
+
+/* ============================================
+   TABLET STYLES (768px - 1023px)
+   ============================================ */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+
+    /* Header */
+    .driver-header {
+        padding: 14px 24px !important;
+    }
+
+    .driver-header h1 {
+        font-size: 18px !important;
+    }
+
+    .driver-header-actions button {
+        padding: 10px 16px !important;
+        font-size: 13px !important;
+    }
+
+    /* Bus Selection */
+    .bus-selection-card {
+        max-width: 500px !important;
+        padding: 32px 28px !important;
+    }
+
+    /* Trip Info */
+    .trip-info-card {
+        padding: 20px !important;
+        margin: 16px !important;
+    }
+
+    .trip-info-stats {
+        flex-wrap: wrap !important;
+    }
+
+    /* Action Buttons */
+    .action-buttons-container {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+    }
+
+    .action-button {
+        flex: 1 1 calc(50% - 6px) !important;
+        min-width: 150px !important;
+    }
+
+    /* Map */
+    .driver-map-container {
+        height: 60vh !important;
+        min-height: 400px !important;
+    }
+
+    /* Modals */
+    .passenger-modal,
+    .delay-modal {
+        width: 85% !important;
+        max-width: 600px !important;
+    }
+}
+
+/* ============================================
+   LANDSCAPE ORIENTATION (Mobile)
+   ============================================ */
+
+@media (max-height: 600px) and (orientation: landscape) {
+    .driver-map-container {
+        height: 85vh !important;
+    }
+
+    .speedometer-wrapper {
+        padding: 16px !important;
+    }
+
+    .trip-info-card {
+        margin: 8px !important;
+        padding: 12px !important;
+    }
+
+    .stop-progress-container {
+        max-height: 60vh !important;
+        overflow-y: auto !important;
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES FOR DRIVER DASHBOARD
+   ============================================ */
+
+/* Stack on mobile */
+.stack-mobile {
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 767px) {
+    .stack-mobile {
+        flex-direction: column !important;
+    }
+}
+
+/* Hide on mobile */
+.hide-on-mobile {
+    display: block;
+}
+
+@media (max-width: 767px) {
+    .hide-on-mobile {
+        display: none !important;
+    }
+}
+
+/* Show only on mobile */
+.show-on-mobile {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .show-on-mobile {
+        display: block !important;
+    }
+}
+
+/* Full width on mobile */
+.full-width-mobile {
+    width: auto;
+}
+
+@media (max-width: 767px) {
+    .full-width-mobile {
+        width: 100% !important;
+    }
+}
+
+/* Responsive padding */
+.responsive-padding {
+    padding: 24px;
+}
+
+@media (max-width: 767px) {
+    .responsive-padding {
+        padding: 16px !important;
+    }
+}
+
+/* Responsive text */
+.responsive-text {
+    font-size: 16px;
+}
+
+@media (max-width: 767px) {
+    .responsive-text {
+        font-size: 14px !important;
+    }
+}

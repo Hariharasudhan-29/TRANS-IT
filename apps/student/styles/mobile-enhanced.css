@@ -1,0 +1,630 @@
+/* ============================================
+   TRANS-IT MOBILE OPTIMIZATION - ENHANCED
+   Comprehensive mobile-first responsive design
+   ============================================ */
+
+/* ============================================
+   GLOBAL MOBILE FIXES
+   ============================================ */
+
+/* Prevent horizontal scroll on all devices */
+html,
+body {
+    overflow-x: hidden !important;
+    width: 100%;
+    max-width: 100vw;
+}
+
+/* Fix viewport height issues on mobile (especially iOS) */
+:root {
+    --vh: 1vh;
+}
+
+@supports (-webkit-touch-callout: none) {
+
+    /* iOS-specific fixes */
+    body {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Prevent zoom on input focus (iOS) */
+input,
+select,
+textarea {
+    font-size: 16px !important;
+}
+
+/* Better touch scrolling */
+* {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+/* Remove tap highlight on mobile */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+/* Active state for buttons on mobile */
+button:active,
+a:active {
+    opacity: 0.7;
+}
+
+/* ============================================
+   MOBILE-SPECIFIC OPTIMIZATIONS (< 768px)
+   ============================================ */
+
+@media (max-width: 767px) {
+
+    /* ========== TYPOGRAPHY ========== */
+    h1 {
+        font-size: clamp(20px, 5vw, 24px) !important;
+    }
+
+    h2 {
+        font-size: clamp(18px, 4.5vw, 22px) !important;
+    }
+
+    h3 {
+        font-size: clamp(16px, 4vw, 18px) !important;
+    }
+
+    p,
+    span,
+    div {
+        font-size: clamp(14px, 3.5vw, 16px);
+    }
+
+    /* ========== SPACING ========== */
+    .container,
+    .wrapper,
+    .page-container {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+
+    /* ========== BUTTONS ========== */
+    button,
+    .btn,
+    a.button {
+        min-height: 48px !important;
+        padding: 12px 20px !important;
+        font-size: 15px !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+    }
+
+    /* Full-width buttons on mobile */
+    .btn-primary,
+    .btn-action {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    /* ========== FORMS ========== */
+    input,
+    select,
+    textarea {
+        width: 100% !important;
+        padding: 14px 16px !important;
+        font-size: 16px !important;
+        border-radius: 10px !important;
+        min-height: 48px;
+    }
+
+    label {
+        font-size: 14px !important;
+        margin-bottom: 6px !important;
+        display: block;
+    }
+
+    /* ========== CARDS ========== */
+    .card,
+    .info-card,
+    .stat-card {
+        margin-bottom: 16px !important;
+        padding: 16px !important;
+        border-radius: 16px !important;
+    }
+
+    /* ========== MODALS ========== */
+    .modal,
+    .dialog,
+    .popup {
+        width: 95% !important;
+        max-width: 95% !important;
+        margin: 16px !important;
+        padding: 20px !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+    }
+
+    .modal-header {
+        padding: 16px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .modal-footer {
+        padding: 16px !important;
+        margin-top: 16px !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .modal-footer button {
+        width: 100% !important;
+    }
+
+    /* ========== NAVIGATION ========== */
+    nav,
+    .navbar,
+    .header {
+        padding: 12px 16px !important;
+        flex-wrap: wrap !important;
+    }
+
+    .nav-links {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 8px !important;
+    }
+
+    /* ========== TABLES ========== */
+    table {
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    thead {
+        display: none;
+        /* Hide on very small screens */
+    }
+
+    tbody tr {
+        display: block !important;
+        margin-bottom: 16px !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+    }
+
+    tbody td {
+        display: block !important;
+        text-align: right !important;
+        padding: 8px !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+    }
+
+    tbody td:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        color: #64748b;
+    }
+
+    tbody td:last-child {
+        border-bottom: none !important;
+    }
+
+    /* ========== GRIDS ========== */
+    .grid,
+    .grid-container {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    /* ========== FLEXBOX ========== */
+    .flex-row {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    /* ========== IMAGES ========== */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* ========== MAPS ========== */
+    .map-container,
+    [class*="map"] {
+        height: 60vh !important;
+        min-height: 300px !important;
+        max-height: 500px !important;
+        width: 100% !important;
+        border-radius: 16px !important;
+        overflow: hidden !important;
+    }
+
+    /* ========== SPECIFIC COMPONENTS ========== */
+
+    /* Dashboard Header */
+    .dashboard-header,
+    .admin-header,
+    .driver-header {
+        padding: 12px 16px !important;
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+    }
+
+    .header-actions {
+        width: 100% !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .header-actions>* {
+        flex: 1 1 auto !important;
+        min-width: 100px !important;
+    }
+
+    /* Search Card */
+    .search-card {
+        width: 95% !important;
+        padding: 20px !important;
+        margin: 16px auto !important;
+    }
+
+    /* Stats Grid */
+    .stats-grid,
+    .stats-container {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        padding: 16px !important;
+    }
+
+    /* Tabs */
+    .tabs,
+    .tab-list {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        flex-wrap: nowrap !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+    }
+
+    .tabs::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .tab {
+        white-space: nowrap !important;
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+    }
+
+    /* Speedometer */
+    .speedometer,
+    .gauge {
+        width: 140px !important;
+        height: 140px !important;
+        margin: 0 auto !important;
+    }
+
+    /* QR Code */
+    .qr-code,
+    .qr-container img {
+        width: 200px !important;
+        height: 200px !important;
+        margin: 0 auto !important;
+    }
+
+    /* Passenger List */
+    .passenger-list,
+    .passenger-modal {
+        width: 95% !important;
+        max-width: 100% !important;
+        max-height: 70vh !important;
+    }
+
+    /* Trip Info */
+    .trip-info,
+    .trip-card {
+        flex-direction: column !important;
+        gap: 12px !important;
+        padding: 16px !important;
+    }
+
+    /* Action Buttons */
+    .action-buttons,
+    .button-group {
+        flex-direction: column !important;
+        gap: 10px !important;
+        width: 100% !important;
+    }
+
+    .action-buttons button {
+        width: 100% !important;
+    }
+
+    /* Slide Button */
+    .slide-button {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Announcements */
+    .announcement-card {
+        padding: 16px !important;
+        margin-bottom: 12px !important;
+    }
+
+    /* Route Stops */
+    .route-stops,
+    .stop-list {
+        max-height: 50vh !important;
+        overflow-y: auto !important;
+    }
+
+    .stop-item {
+        padding: 12px !important;
+        font-size: 14px !important;
+    }
+
+    /* Profile Section */
+    .profile-section {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    /* ========== UTILITY CLASSES ========== */
+
+    .hide-mobile {
+        display: none !important;
+    }
+
+    .show-mobile {
+        display: block !important;
+    }
+
+    .full-width-mobile {
+        width: 100% !important;
+    }
+
+    .text-center-mobile {
+        text-align: center !important;
+    }
+
+    .stack-mobile {
+        flex-direction: column !important;
+    }
+}
+
+/* ============================================
+   LANDSCAPE MODE FIXES (Mobile)
+   ============================================ */
+
+@media (max-height: 600px) and (orientation: landscape) {
+
+    .modal,
+    .dialog {
+        max-height: 95vh !important;
+        overflow-y: auto !important;
+    }
+
+    .map-container {
+        height: 85vh !important;
+    }
+
+    .header {
+        padding: 8px 16px !important;
+    }
+
+    .speedometer,
+    .gauge {
+        width: 120px !important;
+        height: 120px !important;
+    }
+}
+
+/* ============================================
+   SMALL MOBILE (< 375px)
+   ============================================ */
+
+@media (max-width: 374px) {
+    h1 {
+        font-size: 18px !important;
+    }
+
+    h2 {
+        font-size: 16px !important;
+    }
+
+    button,
+    .btn {
+        font-size: 14px !important;
+        padding: 10px 16px !important;
+    }
+
+    .speedometer,
+    .gauge {
+        width: 120px !important;
+        height: 120px !important;
+    }
+
+    .qr-code {
+        width: 180px !important;
+        height: 180px !important;
+    }
+}
+
+/* ============================================
+   TABLET OPTIMIZATIONS (768px - 1023px)
+   ============================================ */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+
+    .stats-grid,
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    .modal,
+    .dialog {
+        width: 85% !important;
+        max-width: 600px !important;
+    }
+
+    .map-container {
+        height: 70vh !important;
+    }
+
+    .speedometer,
+    .gauge {
+        width: 160px !important;
+        height: 160px !important;
+    }
+
+    .action-buttons,
+    .button-group {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+    }
+
+    .action-buttons button {
+        flex: 1 1 calc(50% - 6px) !important;
+        min-width: 150px !important;
+    }
+}
+
+/* ============================================
+   TOUCH DEVICE OPTIMIZATIONS
+   ============================================ */
+
+@media (hover: none) and (pointer: coarse) {
+
+    /* Larger touch targets */
+    button,
+    a,
+    input,
+    select,
+    .clickable {
+        min-height: 48px !important;
+        min-width: 48px !important;
+    }
+
+    /* Remove hover effects */
+    *:hover {
+        transform: none !important;
+    }
+
+    /* Better tap feedback */
+    button:active,
+    a:active,
+    .clickable:active {
+        transform: scale(0.97) !important;
+        opacity: 0.8 !important;
+    }
+
+    /* Larger scrollbars */
+    ::-webkit-scrollbar {
+        width: 8px !important;
+        height: 8px !important;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #cbd5e1 !important;
+        border-radius: 4px !important;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+
+    button,
+    input,
+    select,
+    textarea {
+        border: 2px solid currentColor !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+
+    .no-print,
+    button,
+    .modal,
+    .header-actions {
+        display: none !important;
+    }
+
+    .map-container {
+        height: 400px !important;
+    }
+
+    * {
+        background: white !important;
+        color: black !important;
+    }
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* GPU acceleration for animations */
+.animated,
+.modal,
+.card {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Optimize images */
+img {
+    image-rendering: -webkit-optimize-contrast;
+}
+
+/* ============================================
+   SAFE AREA INSETS (Notch Support)
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    body {
+        padding-left: max(0px, env(safe-area-inset-left));
+        padding-right: max(0px, env(safe-area-inset-right));
+        padding-bottom: max(0px, env(safe-area-inset-bottom));
+    }
+
+    .header,
+    .navbar {
+        padding-top: max(12px, env(safe-area-inset-top));
+    }
+}

@@ -1,0 +1,696 @@
+/* ============================================
+   TRANS-IT DRIVER/ADMIN MOBILE OPTIMIZATION - ENHANCED
+   Comprehensive mobile-first responsive design
+   ============================================ */
+
+/* Import base mobile optimizations */
+/* Base mobile optimizations are already imported in _app.js */
+
+/* ============================================
+   ADMIN PANEL SPECIFIC MOBILE FIXES
+   ============================================ */
+
+@media (max-width: 767px) {
+
+    /* ========== ADMIN HEADER ========== */
+    .admin-header {
+        padding: 12px 16px !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .admin-header h1 {
+        font-size: 20px !important;
+        margin: 0 !important;
+    }
+
+    .admin-header-actions {
+        width: 100% !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .admin-header-actions button {
+        flex: 1 1 calc(50% - 4px) !important;
+        min-width: 120px !important;
+        font-size: 13px !important;
+        padding: 10px 12px !important;
+    }
+
+    /* ========== TABS ========== */
+    .tab-container {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        margin-bottom: 16px !important;
+    }
+
+    .tab-container::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .tab-list {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 8px !important;
+        padding: 12px 16px !important;
+        min-width: max-content !important;
+    }
+
+    .tab-button {
+        white-space: nowrap !important;
+        padding: 10px 16px !important;
+        font-size: 13px !important;
+        border-radius: 10px !important;
+        min-width: auto !important;
+    }
+
+    /* ========== STATS GRID ========== */
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        padding: 16px !important;
+    }
+
+    .stat-card {
+        padding: 16px !important;
+        border-radius: 12px !important;
+    }
+
+    .stat-card h3 {
+        font-size: 13px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .stat-card .stat-value {
+        font-size: 24px !important;
+    }
+
+    .stat-card .stat-label {
+        font-size: 12px !important;
+    }
+
+    /* ========== TABLES ========== */
+    .table-wrapper {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        margin: 0 -16px !important;
+        padding: 0 16px !important;
+    }
+
+    .admin-table {
+        min-width: 100% !important;
+        font-size: 13px !important;
+    }
+
+    .admin-table th {
+        padding: 12px 8px !important;
+        font-size: 11px !important;
+        white-space: nowrap !important;
+    }
+
+    .admin-table td {
+        padding: 12px 8px !important;
+        font-size: 13px !important;
+    }
+
+    /* Card-style table for mobile */
+    .table-card-mobile {
+        display: block !important;
+    }
+
+    .table-card-mobile thead {
+        display: none !important;
+    }
+
+    .table-card-mobile tbody {
+        display: block !important;
+    }
+
+    .table-card-mobile tr {
+        display: block !important;
+        margin-bottom: 16px !important;
+        background: white !important;
+        border-radius: 12px !important;
+        padding: 16px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .table-card-mobile td {
+        display: flex !important;
+        justify-content: space-between !important;
+        padding: 8px 0 !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+    }
+
+    .table-card-mobile td:last-child {
+        border-bottom: none !important;
+    }
+
+    .table-card-mobile td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #64748b;
+        margin-right: 16px;
+    }
+
+    /* ========== FORMS ========== */
+    .admin-form {
+        padding: 16px !important;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .form-group {
+        margin-bottom: 16px !important;
+    }
+
+    .form-label {
+        font-size: 14px !important;
+        margin-bottom: 6px !important;
+        font-weight: 600 !important;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+        width: 100% !important;
+        padding: 12px 14px !important;
+        font-size: 16px !important;
+        border-radius: 10px !important;
+    }
+
+    .form-actions {
+        flex-direction: column !important;
+        gap: 10px !important;
+        margin-top: 20px !important;
+    }
+
+    .form-actions button {
+        width: 100% !important;
+    }
+
+    /* ========== SEARCH & FILTERS ========== */
+    .search-container {
+        flex-direction: column !important;
+        gap: 12px !important;
+        padding: 16px !important;
+    }
+
+    .search-input {
+        width: 100% !important;
+        padding: 12px 16px !important;
+        font-size: 16px !important;
+    }
+
+    .filter-buttons {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .filter-button {
+        flex: 1 1 calc(50% - 4px) !important;
+        min-width: 100px !important;
+        padding: 10px 12px !important;
+        font-size: 13px !important;
+    }
+
+    /* ========== DRIVER MANAGEMENT ========== */
+    .driver-card {
+        padding: 16px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .driver-info {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .driver-actions {
+        flex-direction: column !important;
+        gap: 8px !important;
+        margin-top: 12px !important;
+    }
+
+    .driver-actions button {
+        width: 100% !important;
+    }
+
+    /* ========== BUS MANAGEMENT ========== */
+    .bus-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .bus-card {
+        padding: 16px !important;
+    }
+
+    .bus-status-badge {
+        font-size: 12px !important;
+        padding: 4px 8px !important;
+    }
+
+    /* ========== ROUTE MANAGEMENT ========== */
+    .route-card {
+        padding: 16px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .route-header {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .route-stops-list {
+        max-height: 40vh !important;
+        overflow-y: auto !important;
+    }
+
+    .route-stop-item {
+        padding: 10px !important;
+        font-size: 14px !important;
+    }
+
+    /* ========== ANNOUNCEMENTS ========== */
+    .announcement-form {
+        padding: 16px !important;
+    }
+
+    .announcement-card {
+        padding: 16px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .announcement-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+
+    .announcement-actions {
+        width: 100% !important;
+        justify-content: flex-end !important;
+    }
+
+    /* ========== DELAY REPORTS ========== */
+    .delay-report-card {
+        padding: 16px !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .delay-info {
+        width: 100% !important;
+    }
+
+    .delay-actions {
+        width: 100% !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .delay-actions button {
+        width: 100% !important;
+    }
+
+    /* ========== SOS ALERTS ========== */
+    .sos-alert-card {
+        padding: 16px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .sos-info {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .sos-actions {
+        margin-top: 12px !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    /* ========== TRIP LOGS ========== */
+    .trip-log-filters {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .trip-log-card {
+        padding: 16px !important;
+    }
+
+    .trip-log-details {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    /* ========== USER MANAGEMENT ========== */
+    .user-list-header {
+        flex-direction: column !important;
+        gap: 12px !important;
+        padding: 16px !important;
+    }
+
+    .user-card {
+        padding: 16px !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .user-info {
+        width: 100% !important;
+    }
+
+    .user-actions {
+        width: 100% !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    /* ========== MODALS ========== */
+    .admin-modal {
+        width: 95% !important;
+        max-width: 95% !important;
+        padding: 20px !important;
+        margin: 16px !important;
+    }
+
+    .modal-header {
+        padding: 16px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .modal-header h2 {
+        font-size: 18px !important;
+    }
+
+    .modal-body {
+        padding: 16px !important;
+        max-height: 60vh !important;
+        overflow-y: auto !important;
+    }
+
+    .modal-footer {
+        padding: 16px !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .modal-footer button {
+        width: 100% !important;
+    }
+
+    /* ========== CHARTS & GRAPHS ========== */
+    .chart-container {
+        height: 250px !important;
+        margin: 16px 0 !important;
+    }
+
+    /* ========== PAGINATION ========== */
+    .pagination {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        justify-content: center !important;
+    }
+
+    .pagination button {
+        min-width: 40px !important;
+        padding: 8px 12px !important;
+        font-size: 14px !important;
+    }
+
+    /* ========== EXPORT BUTTONS ========== */
+    .export-buttons {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .export-buttons button {
+        width: 100% !important;
+    }
+}
+
+/* ============================================
+   DRIVER DASHBOARD SPECIFIC MOBILE FIXES
+   ============================================ */
+
+@media (max-width: 767px) {
+
+    /* ========== DRIVER HEADER ========== */
+    .driver-header {
+        padding: 12px 16px !important;
+        flex-wrap: wrap !important;
+    }
+
+    .driver-header h1 {
+        font-size: 16px !important;
+    }
+
+    .driver-header-info {
+        font-size: 12px !important;
+        gap: 6px !important;
+    }
+
+    .driver-header-actions {
+        width: 100% !important;
+        margin-top: 12px !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+    }
+
+    .driver-header-actions button {
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+        flex: 1 !important;
+    }
+
+    /* ========== BUS SELECTION ========== */
+    .bus-selection-container {
+        padding: 20px 16px !important;
+    }
+
+    .bus-selection-card {
+        padding: 24px 20px !important;
+        max-width: 100% !important;
+    }
+
+    .bus-selection-card h2 {
+        font-size: 20px !important;
+    }
+
+    .bus-selection-card select {
+        font-size: 16px !important;
+        padding: 14px !important;
+    }
+
+    /* ========== ACTIVE TRIP INFO ========== */
+    .trip-info-card {
+        padding: 16px !important;
+        margin: 12px !important;
+    }
+
+    .trip-info-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+
+    .trip-info-stats {
+        flex-direction: column !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+
+    .trip-stat {
+        padding: 10px !important;
+        font-size: 13px !important;
+    }
+
+    /* ========== VIEW TOGGLE ========== */
+    .view-toggle-container {
+        padding: 12px !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+
+    .view-toggle-button {
+        padding: 10px 14px !important;
+        font-size: 13px !important;
+        flex: 1 !important;
+    }
+
+    /* ========== SPEEDOMETER ========== */
+    .speedometer-wrapper {
+        padding: 20px 16px !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    .speedometer {
+        width: 140px !important;
+        height: 140px !important;
+    }
+
+    /* ========== MAP ========== */
+    .driver-map-container {
+        height: 50vh !important;
+        min-height: 300px !important;
+        max-height: 500px !important;
+        width: 100% !important;
+        border-radius: 16px !important;
+    }
+
+    /* ========== STOP PROGRESS ========== */
+    .stop-progress-container {
+        padding: 16px !important;
+    }
+
+    .stop-progress-header {
+        font-size: 14px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .stop-item {
+        padding: 12px !important;
+        font-size: 13px !important;
+    }
+
+    .stop-name {
+        font-size: 14px !important;
+        font-weight: 600 !important;
+    }
+
+    .stop-time {
+        font-size: 11px !important;
+    }
+
+    .stop-number {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 12px !important;
+    }
+
+    /* ========== ACTION BUTTONS ========== */
+    .action-buttons-container {
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding: 12px !important;
+        width: 100% !important;
+    }
+
+    .action-button {
+        width: 100% !important;
+        padding: 12px !important;
+        font-size: 14px !important;
+    }
+
+    /* ========== SLIDE BUTTON ========== */
+    .slide-button-container {
+        padding: 12px !important;
+        width: 100% !important;
+    }
+
+    /* ========== PASSENGER MODAL ========== */
+    .passenger-modal {
+        width: 95% !important;
+        max-width: 100% !important;
+        max-height: 85vh !important;
+        padding: 20px !important;
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+    }
+
+    .passenger-modal h2 {
+        font-size: 18px !important;
+    }
+
+    .passenger-item {
+        padding: 12px !important;
+        font-size: 14px !important;
+    }
+
+    /* ========== DELAY MODAL ========== */
+    .delay-modal {
+        width: 95% !important;
+        max-width: 100% !important;
+        padding: 20px !important;
+    }
+
+    .delay-modal h2 {
+        font-size: 18px !important;
+    }
+
+    .delay-reason-button {
+        padding: 12px !important;
+        font-size: 14px !important;
+    }
+
+    /* ========== QR CODE ========== */
+    .qr-container {
+        padding: 20px !important;
+    }
+
+    .qr-code {
+        width: 200px !important;
+        height: 200px !important;
+    }
+
+    /* ========== SPEED WARNING ========== */
+    .speed-warning {
+        padding: 12px 16px !important;
+        font-size: 13px !important;
+    }
+
+    /* ========== GPS STATUS ========== */
+    .gps-status {
+        padding: 10px 16px !important;
+        font-size: 12px !important;
+    }
+
+    /* ========== SOS BUTTON ========== */
+    .sos-button {
+        width: 56px !important;
+        height: 56px !important;
+        bottom: 20px !important;
+        right: 20px !important;
+    }
+}
+
+/* ============================================
+   TABLET OPTIMIZATIONS (768px - 1023px)
+   ============================================ */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .action-buttons-container {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+    }
+
+    .action-button {
+        flex: 1 1 calc(50% - 6px) !important;
+        min-width: 150px !important;
+    }
+
+    .driver-map-container {
+        height: 60vh !important;
+        min-height: 400px !important;
+    }
+
+    .speedometer {
+        width: 160px !important;
+        height: 160px !important;
+    }
+}
