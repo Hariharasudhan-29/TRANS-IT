@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import { ChevronLeft, ChevronRight, Trash2, Wrench, Search } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Trash2, Wrench, Search, Menu, X } from 'lucide-react';
 
 import { BUS_ROUTES } from '../../student/data/busRoutes';
 
@@ -30,6 +30,7 @@ export default function AdminPanel() {
     const [editingAssignment, setEditingAssignment] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [userBusFilter, setUserBusFilter] = useState('');
+    const [showNav, setShowNav] = useState(true);
     const router = useRouter();
     // db initialized lazily inside effects/handlers
 
@@ -707,8 +708,7 @@ export default function AdminPanel() {
     };
 
     return (
-        <div style={{
-            padding: '40px',
+        <div className="admin-root" style={{
             fontFamily: '"Outfit", sans-serif',
             minHeight: '100vh',
             color: '#e2e8f0',
@@ -722,6 +722,25 @@ export default function AdminPanel() {
                     50% { background-position: 100% 50%; }
                     100% { background-position: 0% 50%; }
                 }
+                .admin-root { padding: 40px; }
+                .header-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+                .header-actions { display: flex; gap: 20px; align-items: center; }
+                .tab-content { padding: 40px; }
+                .controls-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; gap: 16px; }
+                .controls-right { display: flex; gap: 12px; align-items: center; }
+                .grid-responsive { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+                
+                @media (max-width: 768px) {
+                    .admin-root { padding: 16px !important; }
+                    .header-wrap { flex-direction: column !important; align-items: flex-start !important; gap: 16px; }
+                    .header-actions { width: 100%; justify-content: space-between !important; }
+                    .tab-content { padding: 20px 16px !important; }
+                    .controls-wrap { flex-direction: column !important; align-items: stretch !important; gap: 12px; }
+                    .controls-wrap input, .controls-wrap select, .controls-wrap button, .controls-right { width: 100% !important; flex-direction: column !important; }
+                    .controls-right select, .controls-right input { width: 100% !important; }
+                    .grid-responsive { grid-template-columns: 1fr !important; }
+                    .tabs-scroll::-webkit-scrollbar { height: 0px; background: transparent; } /* hidden scrollbar for tabs */
+                }
             `}</style>
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -730,7 +749,7 @@ export default function AdminPanel() {
                 style={{ maxWidth: '1200px', margin: '0 auto' }}
             >
                 {/* Header */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+                <div className="header-wrap">
                     <div>
                         <motion.h1
                             initial={{ x: -20, opacity: 0 }}
@@ -749,7 +768,7 @@ export default function AdminPanel() {
                             Manage your transit system
                         </motion.p>
                     </div>
-                    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                    <div className="header-actions">
                         <span style={{ fontSize: '14px', color: '#cbd5e1' }}>{user.email}</span>
                         <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleLogout} style={{ padding: '8px 16px', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', cursor: 'pointer', color: '#fca5a5', fontWeight: 'bold', backdropFilter: 'blur(5px)' }}>Logout</motion.button>
                         <Link href="/" style={{ textDecoration: 'none', color: '#60a5fa', fontWeight: '600' }}>← Home</Link>
@@ -784,54 +803,87 @@ export default function AdminPanel() {
                     return null;
                 })()}
 
-                {/* Tabs */}
-                <div style={{ display: 'flex', gap: '10px', marginBottom: '30px', borderBottom: '1px solid rgba(255,255,255,0.2)', paddingBottom: '1px', overflowX: 'auto' }}>
-                    {['overview', 'analytics', 'trips', 'users', 'drivers', 'live_map', 'routes', 'announcements', 'broadcast', 'bulk_import', 'geofence', 'leave', 'feedback', 'queries', 'sos', 'delays', 'maintenance', 'expenses', 'lost_found'].map(tab => {
-                        const count = getBadgeCount(tab);
-                        return (
-                            <motion.button
-                                key={tab}
-                                whileHover={{ y: -2 }}
-                                whileTap={{ y: 0 }}
-                                onClick={() => setActiveTab(tab)}
-                                style={{
-                                    padding: '12px 24px',
-                                    background: activeTab === tab ? 'white' : 'transparent',
-                                    border: '1px solid',
-                                    borderColor: activeTab === tab ? 'white' : 'transparent',
-                                    borderBottomColor: activeTab === tab ? 'white' : 'transparent',
-                                    borderRadius: '12px 12px 0 0',
-                                    color: activeTab === tab ? '#2563eb' : 'rgba(255,255,255,0.7)',
-                                    fontWeight: activeTab === tab ? '700' : '600',
-                                    cursor: 'pointer',
-                                    textTransform: 'capitalize',
-                                    marginBottom: '-1px',
-                                    position: 'relative',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px'
-                                }}
-                            >
-                                {tab}
-                                {count > 0 && (
-                                    <span style={{
-                                        background: '#ef4444', color: 'white', borderRadius: '50%',
-                                        width: '20px', height: '20px', fontSize: '11px', display: 'flex',
-                                        alignItems: 'center', justifyContent: 'center', fontWeight: 'bold'
-                                    }}>
-                                        {count}
-                                    </span>
-                                )}
-                                {activeTab === tab && (
-                                    <motion.div
-                                        layoutId="activeTabIndicator"
-                                        style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: '#2563eb', borderRadius: '3px 3px 0 0' }}
-                                    />
-                                )}
-                            </motion.button>
-                        );
-                    })}
+                {/* Toggle Nav Button */}
+                <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '16px' }}>
+                    <button
+                        onClick={() => setShowNav(!showNav)}
+                        style={{
+                            background: 'rgba(255,255,255,0.1)',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            color: 'white',
+                            padding: '8px 16px',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            fontWeight: 'bold',
+                            backdropFilter: 'blur(5px)'
+                        }}
+                    >
+                        {showNav ? <><X size={18} /> Hide Navigation Panel</> : <><Menu size={18} /> Show Navigation Panel</>}
+                    </button>
                 </div>
+
+                {/* Tabs */}
+                <AnimatePresence>
+                    {showNav && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            style={{ overflow: 'hidden' }}
+                        >
+                            <div className="tabs-scroll" style={{ display: 'flex', gap: '10px', marginBottom: '30px', borderBottom: '1px solid rgba(255,255,255,0.2)', paddingBottom: '1px', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+                                {['overview', 'analytics', 'trips', 'users', 'drivers', 'live_map', 'routes', 'announcements', 'broadcast', 'bulk_import', 'geofence', 'leave', 'feedback', 'queries', 'sos', 'delays', 'maintenance', 'expenses', 'lost_found'].map(tab => {
+                                    const count = getBadgeCount(tab);
+                                    return (
+                                        <motion.button
+                                            key={tab}
+                                            whileHover={{ y: -2 }}
+                                            whileTap={{ y: 0 }}
+                                            onClick={() => setActiveTab(tab)}
+                                            style={{
+                                                padding: '12px 24px',
+                                                background: activeTab === tab ? 'white' : 'transparent',
+                                                border: '1px solid',
+                                                borderColor: activeTab === tab ? 'white' : 'transparent',
+                                                borderBottomColor: activeTab === tab ? 'white' : 'transparent',
+                                                borderRadius: '12px 12px 0 0',
+                                                color: activeTab === tab ? '#2563eb' : 'rgba(255,255,255,0.7)',
+                                                fontWeight: activeTab === tab ? '700' : '600',
+                                                cursor: 'pointer',
+                                                textTransform: 'capitalize',
+                                                marginBottom: '-1px',
+                                                position: 'relative',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '8px'
+                                            }}
+                                        >
+                                            {tab}
+                                            {count > 0 && (
+                                                <span style={{
+                                                    background: '#ef4444', color: 'white', borderRadius: '50%',
+                                                    width: '20px', height: '20px', fontSize: '11px', display: 'flex',
+                                                    alignItems: 'center', justifyContent: 'center', fontWeight: 'bold'
+                                                }}>
+                                                    {count}
+                                                </span>
+                                            )}
+                                            {activeTab === tab && (
+                                                <motion.div
+                                                    layoutId="activeTabIndicator"
+                                                    style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: '#2563eb', borderRadius: '3px 3px 0 0' }}
+                                                />
+                                            )}
+                                        </motion.button>
+                                    );
+                                })}
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
                 {/* Tab Content */}
                 <motion.div
@@ -848,7 +900,7 @@ export default function AdminPanel() {
                         >
                             {/* OVERVIEW TAB */}
                             {activeTab === 'overview' && (
-                                <div style={{ padding: '40px' }}>
+                                <div className="tab-content">
                                     <h3>Dashboard Overview</h3>
 
                                     {/* Analytics Section */}
@@ -938,8 +990,8 @@ export default function AdminPanel() {
 
                             {/* TRIPS TAB */}
                             {activeTab === 'trips' && (
-                                <div style={{ padding: '40px' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+                                <div className="tab-content">
+                                    <div className="controls-wrap">
                                         <h3 style={{ margin: 0 }}>Trip Management</h3>
                                         <button onClick={exportTripsToCSV} style={{ padding: '10px 20px', background: '#0f172a', color: 'white', borderRadius: '8px', border: 'none', cursor: 'pointer', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                             <span>📥</span> Export CSV
@@ -1121,10 +1173,10 @@ export default function AdminPanel() {
 
                             {/* USERS TAB - Registered Students */}
                             {activeTab === 'users' && (
-                                <div style={{ padding: '40px' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                                <div className="tab-content">
+                                    <div className="controls-wrap">
                                         <h3 style={{ margin: 0 }}>Registered Students ({usersList.length})</h3>
-                                        <div style={{ display: 'flex', gap: '12px' }}>
+                                        <div className="controls-right">
                                             <select
                                                 value={userBusFilter}
                                                 onChange={(e) => setUserBusFilter(e.target.value)}
@@ -1225,7 +1277,7 @@ export default function AdminPanel() {
                             {/* LIVE MAP TAB */}
                             {activeTab === 'live_map' && (
                                 <div style={{ padding: '0' }}>
-                                    <div style={{ padding: '20px 20px 10px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <div className="controls-wrap" style={{ padding: '20px 20px 10px 20px' }}>
                                         <h3 style={{ margin: 0 }}>Live Fleet View</h3>
                                         <span style={{ fontSize: '12px', color: '#64748b' }}>updating every few seconds...</span>
                                     </div>
@@ -1237,14 +1289,14 @@ export default function AdminPanel() {
 
                             {/* ROUTES TAB */}
                             {activeTab === 'routes' && (
-                                <div style={{ padding: '40px' }}>
+                                <div className="tab-content">
                                     {/* Add/Edit Route Form */}
                                     <div style={{ marginBottom: '40px', padding: '24px', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                        <div className="controls-wrap" style={{ marginBottom: '16px' }}>
                                             <h4 style={{ margin: 0 }}>{editingRoute ? `Edit Route (Bus ${editingRoute.busNumber})` : 'Add New Route'}</h4>
                                             {editingRoute && <button onClick={() => { setEditingRoute(null); }} style={{ fontSize: '12px', color: '#64748b', background: 'none', border: '1px solid #cbd5e1', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer' }}>Cancel Edit</button>}
                                         </div>
-                                        <form onSubmit={handleAddOrUpdateRoute} style={{ display: 'grid', gap: '16px', gridTemplateColumns: '1fr 1fr 2fr auto' }}>
+                                        <form onSubmit={handleAddOrUpdateRoute} className="grid-responsive">
                                             <input
                                                 name="routeId"
                                                 defaultValue={editingRoute ? editingRoute.routeId : ''}

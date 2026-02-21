@@ -7,7 +7,7 @@ import { getAuth, signOut, updateProfile } from 'firebase/auth';
 import { getFirestore, doc, onSnapshot, collection, query, where, limit, getDocs, updateDoc, addDoc, orderBy, serverTimestamp, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import {
     LayoutDashboard, Clock, MapPin, Users, ShieldCheck, LogOut, User, X, Save, HelpCircle,
-    MessageSquare, Star, AlertTriangle, Moon, Sun, Heart, History, TrendingUp, Info, Edit, Search, Bell
+    MessageSquare, Star, AlertTriangle, Moon, Sun, Heart, History, TrendingUp, Info, Edit, Search, Bell, Menu
 } from 'lucide-react';
 import { BUS_ROUTES } from '../data/busRoutes';
 
@@ -24,6 +24,7 @@ export default function StudentDashboard() {
     const [trackingBus, setTrackingBus] = useState(null);
     const [busLocation, setBusLocation] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
+    const [showNav, setShowNav] = useState(false);
 
     // Feature States
     const [darkMode, setDarkMode] = useState(false);
@@ -632,41 +633,69 @@ export default function StudentDashboard() {
                             </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            {/* Eco-Points Badge */}
-                            <motion.div title="Eco-Points: 5 points = 1.2kg CO2 Saved!" style={{ background: isOnLeave ? theme.card : '#dcfce7', padding: '6px 12px', borderRadius: '20px', border: `1px solid ${isOnLeave ? theme.border : '#86efac'}`, color: isOnLeave ? theme.subText : '#166534', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold', fontSize: '13px' }}>
-                                <span>🌱</span> {regForm.ecoPoints || 0}
-                            </motion.div>
+                            <AnimatePresence>
+                                {showNav && (
+                                    <motion.div
+                                        initial={{ opacity: 0, width: 0, scale: 0.8 }}
+                                        animate={{ opacity: 1, width: 'auto', scale: 1 }}
+                                        exit={{ opacity: 0, width: 0, scale: 0.8 }}
+                                        style={{ display: 'flex', alignItems: 'center', gap: '12px', overflow: 'hidden' }}
+                                    >
+                                        {/* Eco-Points Badge */}
+                                        <motion.div title="Eco-Points: 5 points = 1.2kg CO2 Saved!" style={{ background: isOnLeave ? theme.card : '#dcfce7', padding: '6px 12px', borderRadius: '20px', border: `1px solid ${isOnLeave ? theme.border : '#86efac'}`, color: isOnLeave ? theme.subText : '#166534', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold', fontSize: '13px', whiteSpace: 'nowrap' }}>
+                                            <span>🌱</span> {regForm.ecoPoints || 0}
+                                        </motion.div>
 
-                            <motion.button title="Help & Support" onClick={() => setShowSupport(true)} whileTap={{ scale: 0.9 }} style={{ background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: theme.highlight }}>
-                                <HelpCircle size={20} />
-                            </motion.button>
-                            <motion.button title="Lost & Found" onClick={() => setShowLostFound(true)} whileTap={{ scale: 0.9 }} style={{ background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: theme.highlight }}>
-                                <Search size={20} />
-                            </motion.button>
-                            <motion.button title="Toggle Theme" onClick={toggleTheme} whileTap={{ scale: 0.9 }} style={{ background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: theme.text }}>
-                                {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-                            </motion.button>
-                            {/* Notification Bell */}
-                            <motion.button title="Notifications" onClick={() => setShowNotificationCenter(true)} whileTap={{ scale: 0.9 }} style={{ position: 'relative', background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: unreadNotifications > 0 ? '#f59e0b' : theme.highlight }}>
-                                <Bell size={20} />
-                                {unreadNotifications > 0 && (
-                                    <div style={{ position: 'absolute', top: '4px', right: '4px', background: '#ef4444', color: 'white', borderRadius: '50%', width: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 'bold' }}>
-                                        {unreadNotifications > 9 ? '9+' : unreadNotifications}
-                                    </div>
+                                        <motion.button title="Help & Support" onClick={() => setShowSupport(true)} whileTap={{ scale: 0.9 }} style={{ background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: theme.highlight }}>
+                                            <HelpCircle size={20} />
+                                        </motion.button>
+                                        <motion.button title="Lost & Found" onClick={() => setShowLostFound(true)} whileTap={{ scale: 0.9 }} style={{ background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: theme.highlight }}>
+                                            <Search size={20} />
+                                        </motion.button>
+                                        <motion.button title="Toggle Theme" onClick={toggleTheme} whileTap={{ scale: 0.9 }} style={{ background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: theme.text }}>
+                                            {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+                                        </motion.button>
+                                        {/* Notification Bell */}
+                                        <motion.button title="Notifications" onClick={() => setShowNotificationCenter(true)} whileTap={{ scale: 0.9 }} style={{ position: 'relative', background: theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${theme.border}`, cursor: 'pointer', color: unreadNotifications > 0 ? '#f59e0b' : theme.highlight }}>
+                                            <Bell size={20} />
+                                            {unreadNotifications > 0 && (
+                                                <div style={{ position: 'absolute', top: '4px', right: '4px', background: '#ef4444', color: 'white', borderRadius: '50%', width: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 'bold' }}>
+                                                    {unreadNotifications > 9 ? '9+' : unreadNotifications}
+                                                </div>
+                                            )}
+                                        </motion.button>
+
+                                        <motion.button onClick={() => setShowBusPass(true)} whileTap={{ scale: 0.9 }} title="Digital Bus Pass" style={{ background: 'linear-gradient(135deg, #7c3aed, #6d28d9)', padding: '10px', borderRadius: '50%', border: 'none', cursor: 'pointer', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <span style={{ fontSize: '16px' }}>🪪</span>
+                                        </motion.button>
+                                        <motion.button onClick={() => setShowLeave(true)} whileTap={{ scale: 0.9 }} title="Leave Application" style={{ background: isOnLeave ? '#fee2e2' : theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${isOnLeave ? '#fca5a5' : theme.border}`, cursor: 'pointer', color: isOnLeave ? '#ef4444' : theme.highlight, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <span style={{ fontSize: '16px' }}>🏖️</span>
+                                        </motion.button>
+                                        {!trackingBus ? (
+                                            <motion.button whileTap={{ scale: 0.95 }} style={{ borderRadius: '14px', padding: '10px 20px', fontSize: '14px', border: 'none', background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)', color: 'white', cursor: 'pointer', fontWeight: '700', boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.2)', whiteSpace: 'nowrap' }} onClick={() => router.push('/scan')}>Scan QR</motion.button>
+                                        ) : (
+                                            <motion.button whileTap={{ scale: 0.95 }} style={{ background: 'rgba(254, 226, 226, 0.5)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '8px 16px', borderRadius: '12px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', whiteSpace: 'nowrap' }} onClick={() => { setTrackingBus(null); router.push('/dashboard'); }}>Exit</motion.button>
+                                        )}
+                                    </motion.div>
                                 )}
-                            </motion.button>
+                            </AnimatePresence>
 
-                            <motion.button onClick={() => setShowBusPass(true)} whileTap={{ scale: 0.9 }} title="Digital Bus Pass" style={{ background: 'linear-gradient(135deg, #7c3aed, #6d28d9)', padding: '10px', borderRadius: '50%', border: 'none', cursor: 'pointer', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <span style={{ fontSize: '16px' }}>🪪</span>
+                            <motion.button
+                                onClick={() => setShowNav(!showNav)}
+                                whileTap={{ scale: 0.9 }}
+                                title="Toggle Menu"
+                                style={{
+                                    background: showNav ? theme.card : 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                                    padding: '10px',
+                                    borderRadius: '50%',
+                                    border: showNav ? `1px solid ${theme.border}` : 'none',
+                                    cursor: 'pointer',
+                                    color: showNav ? theme.highlight : 'white',
+                                    boxShadow: showNav ? 'none' : '0 4px 6px -1px rgba(37, 99, 235, 0.3)'
+                                }}
+                            >
+                                {showNav ? <X size={20} /> : <Menu size={20} />}
                             </motion.button>
-                            <motion.button onClick={() => setShowLeave(true)} whileTap={{ scale: 0.9 }} title="Leave Application" style={{ background: isOnLeave ? '#fee2e2' : theme.card, padding: '10px', borderRadius: '50%', border: `1px solid ${isOnLeave ? '#fca5a5' : theme.border}`, cursor: 'pointer', color: isOnLeave ? '#ef4444' : theme.highlight, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <span style={{ fontSize: '16px' }}>🏖️</span>
-                            </motion.button>
-                            {!trackingBus ? (
-                                <motion.button whileTap={{ scale: 0.95 }} style={{ borderRadius: '14px', padding: '10px 20px', fontSize: '14px', border: 'none', background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)', color: 'white', cursor: 'pointer', fontWeight: '700', boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.2)' }} onClick={() => router.push('/scan')}>Scan QR</motion.button>
-                            ) : (
-                                <motion.button whileTap={{ scale: 0.95 }} style={{ background: 'rgba(254, 226, 226, 0.5)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '8px 16px', borderRadius: '12px', fontWeight: '700', cursor: 'pointer', fontSize: '13px' }} onClick={() => { setTrackingBus(null); router.push('/dashboard'); }}>Exit</motion.button>
-                            )}
                         </div>
                     </div>
 

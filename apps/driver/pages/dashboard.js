@@ -9,6 +9,7 @@ import SlideButton from '../components/SlideButton';
 import PreTripModal from '../components/PreTripModal';
 import { BUS_ROUTES } from '../../student/data/busRoutes';
 import dynamic from 'next/dynamic';
+import { Menu, X } from 'lucide-react';
 
 const DriverMap = dynamic(() => import('../components/DriverMap'), { ssr: false });
 const BreakdownMap = dynamic(() => import('../components/BreakdownMap'), { ssr: false });
@@ -24,6 +25,7 @@ export default function DriverDashboard() {
     const [viewMode, setViewMode] = useState('speed'); // 'speed' or 'map'
     const [showChecklist, setShowChecklist] = useState(false);
     const [breakdownMode, setBreakdownMode] = useState(false);
+    const [showNav, setShowNav] = useState(false);
 
     // Translations for English (en) and Tamil (ta)
     const [lang, setLang] = useState('en');
@@ -866,55 +868,86 @@ export default function DriverDashboard() {
                             </div>
                         </div>
 
-                        <div className="driver-header-actions stack-mobile" style={{ display: 'flex', gap: '10px' }}>
-                            <button
-                                title={t.logout}
-                                onClick={handleLogout}
-                                style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}
-                            >
-                                {t.logout}
-                            </button>
-                            <button
-                                title="Toggle Language"
-                                onClick={toggleLang}
-                                style={{ background: 'transparent', border: `1px solid ${theme.border}`, color: theme.text, padding: '8px', borderRadius: '8px', cursor: 'pointer', display: 'flex', fontWeight: 'bold' }}
-                            >
-                                {lang === 'en' ? 'த' : 'EN'}
-                            </button>
-                            <button
-                                title="Toggle Theme"
-                                onClick={() => setDarkMode(!darkMode)}
-                                style={{ background: 'transparent', border: `1px solid ${theme.border}`, color: theme.text, padding: '8px', borderRadius: '8px', cursor: 'pointer', display: 'flex' }}
-                            >
-                                {darkMode ? '☀️' : '🌙'}
-                            </button>
-                            <button
-                                title={t.showQR}
-                                onClick={() => setShowQR(true)}
-                                style={{ background: theme.highlight, color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: '600', cursor: 'pointer' }}
-                            >
-                                📱 {t.showQR}
-                            </button>
-                            <button
-                                title="View Passengers"
-                                onClick={() => setShowPassengers(!showPassengers)}
-                                style={{ background: darkMode ? 'rgba(255,255,255,0.1)' : '#f1f5f9', padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: '600', color: theme.text, border: 'none', cursor: 'pointer', position: 'relative' }}
-                            >
-                                👥 {passengers.length}
-                                {leaveRequests.length > 0 && (
-                                    <span style={{
-                                        position: 'absolute', top: '-6px', right: '-6px',
-                                        background: '#f59e0b', color: 'white', borderRadius: '50%',
-                                        width: '18px', height: '18px', fontSize: '10px',
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold'
-                                    }}>{leaveRequests.length}</span>
+                        <div className="driver-header-actions stack-mobile" style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                            <AnimatePresence>
+                                {showNav && (
+                                    <motion.div
+                                        initial={{ opacity: 0, width: 0, scale: 0.8 }}
+                                        animate={{ opacity: 1, width: 'auto', scale: 1 }}
+                                        exit={{ opacity: 0, width: 0, scale: 0.8 }}
+                                        style={{ display: 'flex', gap: '10px', alignItems: 'center', overflow: 'hidden' }}
+                                    >
+                                        <button
+                                            title={t.logout}
+                                            onClick={handleLogout}
+                                            style={{ background: '#fee2e2', border: 'none', color: '#ef4444', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px', whiteSpace: 'nowrap' }}
+                                        >
+                                            {t.logout}
+                                        </button>
+                                        <button
+                                            title="Toggle Language"
+                                            onClick={toggleLang}
+                                            style={{ background: 'transparent', border: `1px solid ${theme.border}`, color: theme.text, padding: '8px', borderRadius: '8px', cursor: 'pointer', display: 'flex', fontWeight: 'bold' }}
+                                        >
+                                            {lang === 'en' ? 'த' : 'EN'}
+                                        </button>
+                                        <button
+                                            title="Toggle Theme"
+                                            onClick={() => setDarkMode(!darkMode)}
+                                            style={{ background: 'transparent', border: `1px solid ${theme.border}`, color: theme.text, padding: '8px', borderRadius: '8px', cursor: 'pointer', display: 'flex' }}
+                                        >
+                                            {darkMode ? '☀️' : '🌙'}
+                                        </button>
+                                        <button
+                                            title={t.showQR}
+                                            onClick={() => setShowQR(true)}
+                                            style={{ background: theme.highlight, color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: '600', cursor: 'pointer', whiteSpace: 'nowrap' }}
+                                        >
+                                            📱 {t.showQR}
+                                        </button>
+                                        <button
+                                            title="View Passengers"
+                                            onClick={() => setShowPassengers(!showPassengers)}
+                                            style={{ background: darkMode ? 'rgba(255,255,255,0.1)' : '#f1f5f9', padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: '600', color: theme.text, border: 'none', cursor: 'pointer', position: 'relative', whiteSpace: 'nowrap' }}
+                                        >
+                                            👥 {passengers.length}
+                                            {leaveRequests.length > 0 && (
+                                                <span style={{
+                                                    position: 'absolute', top: '-6px', right: '-6px',
+                                                    background: '#f59e0b', color: 'white', borderRadius: '50%',
+                                                    width: '18px', height: '18px', fontSize: '10px',
+                                                    display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold'
+                                                }}>{leaveRequests.length}</span>
+                                            )}
+                                        </button>
+                                        {isActive && (
+                                            <div style={{ background: darkMode ? 'rgba(255,255,255,0.1)' : '#e2e8f0', padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: '600', color: theme.text, whiteSpace: 'nowrap' }}>
+                                                ⏱️ {formatTime(elapsedTime)}
+                                            </div>
+                                        )}
+                                    </motion.div>
                                 )}
-                            </button>
-                            {isActive && (
-                                <div style={{ background: darkMode ? 'rgba(255,255,255,0.1)' : '#e2e8f0', padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: '600', color: theme.text }}>
-                                    ⏱️ {formatTime(elapsedTime)}
-                                </div>
-                            )}
+                            </AnimatePresence>
+
+                            <motion.button
+                                onClick={() => setShowNav(!showNav)}
+                                whileTap={{ scale: 0.9 }}
+                                title="Toggle Navigation Panel"
+                                style={{
+                                    background: showNav ? (darkMode ? 'rgba(255,255,255,0.1)' : '#f1f5f9') : theme.highlight,
+                                    padding: '8px',
+                                    borderRadius: '8px',
+                                    border: showNav ? 'none' : 'none',
+                                    cursor: 'pointer',
+                                    color: showNav ? theme.text : 'white',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    marginLeft: showNav ? '0' : 'auto'
+                                }}
+                            >
+                                {showNav ? <X size={20} /> : <Menu size={20} />}
+                            </motion.button>
                         </div>
                     </div>
 
