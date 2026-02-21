@@ -29,6 +29,7 @@ export default function AdminPanel() {
     const [driversList, setDriversList] = useState([]);
     const [editingAssignment, setEditingAssignment] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [userBusFilter, setUserBusFilter] = useState('');
     const router = useRouter();
     // db initialized lazily inside effects/handlers
 
@@ -333,7 +334,11 @@ export default function AdminPanel() {
         try {
             // First perform client-side Firestore updates to ensure immediate UI feedback/blocking
             const db = getFirestore();
-            if (method === 'DELETE') {
+            if (method === 'APPROVE') {
+                await updateDoc(doc(db, 'users', uid), { approved: true }).catch(e => console.warn("Firestore approval issue:", e));
+                alert('Student approved successfully!');
+                return;
+            } else if (method === 'DELETE') {
                 await deleteDoc(doc(db, 'users', uid)).catch(e => console.warn("Firestore delete issue:", e));
             } else if (method === 'PUT') {
                 await updateDoc(doc(db, 'users', uid), { disabled }).catch(e => console.warn("Firestore update issue:", e));
@@ -691,7 +696,7 @@ export default function AdminPanel() {
     const getBadgeCount = (tab) => {
         switch (tab) {
             case 'queries': return queries.filter(q => q.status !== 'completed').length;
-            case 'sos': return sosAlerts.filter(a => a.status === 'active').length;
+            case 'sos': return sosAlerts.filter(a => a.status === 'active').length + adminNotifications.filter(n => n.type === 'WRONG_BUS_BOARDING' && n.status === 'unread').length;
             case 'delays': return adminNotifications.filter(n => n.type === 'DELAY_REPORT').length;
             case 'maintenance': return maintenanceRequests.filter(m => m.status === 'pending').length;
             case 'expenses': return expenses.filter(e => e.status === 'pending').length;
@@ -1119,13 +1124,25 @@ export default function AdminPanel() {
                                 <div style={{ padding: '40px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
                                         <h3 style={{ margin: 0 }}>Registered Students ({usersList.length})</h3>
-                                        <input
-                                            type="text"
-                                            placeholder="Search by name, email, bus..."
-                                            value={searchTerm}
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                            style={{ padding: '10px 16px', borderRadius: '8px', border: '1px solid #cbd5e1', width: '280px', fontSize: '14px' }}
-                                        />
+                                        <div style={{ display: 'flex', gap: '12px' }}>
+                                            <select
+                                                value={userBusFilter}
+                                                onChange={(e) => setUserBusFilter(e.target.value)}
+                                                style={{ padding: '10px 16px', borderRadius: '8px', border: '1px solid #cbd5e1', background: 'white', fontSize: '14px', outline: 'none' }}
+                                            >
+                                                <option value="">All Buses</option>
+                                                {[...new Set(usersList.map(u => u.busNumber).filter(Boolean))].sort((a, b) => String(a).localeCompare(String(b), undefined, { numeric: true })).map(bus => (
+                                                    <option key={bus} value={bus}>Bus {bus}</option>
+                                                ))}
+                                            </select>
+                                            <input
+                                                type="text"
+                                                placeholder="Search by name, email..."
+                                                value={searchTerm}
+                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                                style={{ padding: '10px 16px', borderRadius: '8px', border: '1px solid #cbd5e1', width: '280px', fontSize: '14px' }}
+                                            />
+                                        </div>
                                     </div>
 
                                     {usersList.length === 0 ? (
@@ -1149,6 +1166,7 @@ export default function AdminPanel() {
                                                 </thead>
                                                 <tbody>
                                                     {usersList
+                                                        .filter(u => userBusFilter ? String(u.busNumber) === String(userBusFilter) : true)
                                                         .filter(u => {
                                                             if (!searchTerm) return true;
                                                             const term = searchTerm.toLowerCase();
@@ -1176,14 +1194,19 @@ export default function AdminPanel() {
                                                                 <td style={{ ...tdStyle, fontFamily: 'monospace', fontSize: '13px' }}>{u.parentPhoneNumber || '-'}</td>
                                                                 <td style={tdStyle}>
                                                                     {u.disabled ?
-                                                                        <span style={{ color: '#ef4444', fontWeight: 'bold' }}>Blocked</span> :
-                                                                        <span style={{ color: '#10b981', fontWeight: 'bold' }}>Active</span>
+                                                                        <span style={{ color: '#ef4444', fontWeight: 'bold', background: '#fef2f2', padding: '4px 8px', borderRadius: '4px' }}>Blocked</span> :
+                                                                        u.approved === false ?
+                                                                            <span style={{ color: '#d97706', fontWeight: 'bold', background: '#fef3c7', padding: '4px 8px', borderRadius: '4px' }}>Pending Approval</span> :
+                                                                            <span style={{ color: '#10b981', fontWeight: 'bold', background: '#dcfce7', padding: '4px 8px', borderRadius: '4px' }}>Active</span>
                                                                     }
                                                                 </td>
                                                                 <td style={tdStyle}>
                                                                     <div style={{ display: 'flex', gap: '8px' }}>
+                                                                        {u.approved === false && (
+                                                                            <button onClick={() => handleUserAction(u.id, 'APPROVE')} style={{ background: '#10b981', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px' }}>Approve</button>
+                                                                        )}
                                                                         {u.disabled ? (
-                                                                            <button onClick={() => handleUserAction(u.id, 'PUT', false)} style={{ background: '#10b981', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px' }}>Unblock</button>
+                                                                            <button onClick={() => handleUserAction(u.id, 'PUT', false)} style={{ background: '#3b82f6', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px' }}>Unblock</button>
                                                                         ) : (
                                                                             <button onClick={() => handleUserAction(u.id, 'PUT', true)} style={{ background: '#f59e0b', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px' }}>Block</button>
                                                                         )}
@@ -1337,7 +1360,61 @@ export default function AdminPanel() {
                                                 </button>
                                             </motion.div>
                                         ))}
-                                        {sosAlerts.filter(a => a.status === 'active').length === 0 && (
+
+                                        {/* Wrong Bus Boarding Alerts from admin_notifications */}
+                                        {adminNotifications.filter(n => n.type === 'WRONG_BUS_BOARDING' && n.status === 'unread').map(alert => (
+                                            <motion.div
+                                                layout
+                                                initial={{ scale: 0.9, opacity: 0 }}
+                                                animate={{ scale: 1, opacity: 1 }}
+                                                key={alert.id}
+                                                style={{
+                                                    padding: '24px',
+                                                    background: '#fffbeb',
+                                                    border: '2px solid #f59e0b',
+                                                    borderRadius: '16px',
+                                                    display: 'flex',
+                                                    justifyContent: 'space-between',
+                                                    alignItems: 'center',
+                                                    boxShadow: '0 4px 12px rgba(245, 158, 11, 0.2)'
+                                                }}
+                                            >
+                                                <div>
+                                                    <h4 style={{ margin: '0 0 8px 0', color: '#b45309', fontSize: '18px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                        <span style={{ fontSize: '24px' }}>⚠️</span>
+                                                        <span>Student <b>{alert.studentName}</b> Boarded Wrong Bus</span>
+                                                    </h4>
+                                                    <p style={{ margin: '0', color: '#92400e' }}>
+                                                        <strong>Boarded:</strong> Bus {alert.attemptedBus} •
+                                                        <strong> Registered For:</strong> Bus {alert.registeredBus}
+                                                    </p>
+                                                    <p style={{ margin: '4px 0 0', color: '#78350f', fontSize: '13px' }}>
+                                                        {alert.timestamp ? new Date(alert.timestamp).toLocaleTimeString() : 'Just now'}
+                                                    </p>
+                                                </div>
+                                                <button
+                                                    onClick={async () => {
+                                                        const db = getFirestore();
+                                                        await updateDoc(doc(db, 'admin_notifications', alert.id), { status: 'acknowledged' });
+                                                    }}
+                                                    style={{
+                                                        padding: '12px 24px',
+                                                        background: '#f59e0b',
+                                                        color: 'white',
+                                                        border: 'none',
+                                                        borderRadius: '8px',
+                                                        cursor: 'pointer',
+                                                        fontWeight: 'bold',
+                                                        fontSize: '14px',
+                                                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                                    }}
+                                                >
+                                                    Acknowledge ✓
+                                                </button>
+                                            </motion.div>
+                                        ))}
+
+                                        {sosAlerts.filter(a => a.status === 'active').length === 0 && adminNotifications.filter(n => n.type === 'WRONG_BUS_BOARDING' && n.status === 'unread').length === 0 && (
                                             <div style={{ textAlign: 'center', padding: '60px', color: '#64748b', background: '#f8fafc', borderRadius: '16px', border: '2px dashed #e2e8f0' }}>
                                                 <div style={{ fontSize: '48px', marginBottom: '16px' }}>🛡️</div>
                                                 <p style={{ fontSize: '18px', fontWeight: '500', color: '#475569' }}>No active alerts. System is secure.</p>

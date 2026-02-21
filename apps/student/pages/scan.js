@@ -76,14 +76,29 @@ export default function ScanPage() {
                 return;
             }
 
-            // Retrieve Parent's Phone Number
+            // Retrieve Profile Info (Parent's phone and Registered Bus)
             let parentPhoneNumber = '';
+            let registeredBus = '';
             try {
                 const userSnap = await getDoc(doc(db, 'users', user.uid));
                 if (userSnap.exists()) {
                     parentPhoneNumber = userSnap.data().parentPhoneNumber;
+                    registeredBus = userSnap.data().busNumber;
                 }
             } catch (e) { console.error("Error retrieving user profile:", e); }
+
+            // Security Check: Emit alert if boarding the wrong bus
+            if (registeredBus && registeredBus.toString() !== busNum.toString()) {
+                await addDoc(collection(db, 'admin_notifications'), {
+                    type: 'WRONG_BUS_BOARDING',
+                    studentId: user.uid,
+                    studentName: user.displayName || 'Student',
+                    registeredBus: registeredBus,
+                    attemptedBus: busNum,
+                    timestamp: Date.now(),
+                    status: 'unread'
+                });
+            }
 
             // Record Boarding
             await addDoc(collection(db, 'boardings'), {
