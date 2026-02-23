@@ -1,6 +1,6 @@
 export const BUS_ROUTES = {
     "101": {
-        driver: "KARMEGAM - 8778062304",
+        driver: "KARMEGAM",
         stops: [
             { id: 1, name: "Kulamangalam Privu", time: "7:20", lat: null, lng: null },
             { id: 2, name: "Vaagaikulam", time: "7:22", lat: null, lng: null },
@@ -48,7 +48,7 @@ export const BUS_ROUTES = {
         ]
     },
     "105": {
-        driver: "CHELLA MANI - 9994372538",
+        driver: "CHELLA MANI",
         stops: [
             { id: 1, name: "Arapalayam", time: "7:35", lat: null, lng: null },
             { id: 2, name: "MELAPONAGARAM - POLICE STATION", time: "7:37", lat: null, lng: null },
@@ -88,7 +88,7 @@ export const BUS_ROUTES = {
         ]
     },
     "107": {
-        driver: "MADHU SUTHANAN - 9789355123",
+        driver: "MADHU SUTHANAN",
         stops: [
             { id: 1, name: "Achampathu", time: "7:25", lat: null, lng: null },
             { id: 2, name: "VIRATTIPATHU", time: "7:27", lat: null, lng: null },
@@ -115,7 +115,7 @@ export const BUS_ROUTES = {
         ]
     },
     "109": {
-        driver: "NAGARAJAN - 9442418255",
+        driver: "NAGARAJAN",
         stops: [
             { id: 1, name: "KALLANTHIRI", time: "7:20", lat: null, lng: null },
             { id: 2, name: "APPAN THIRUPATHI", time: "7:22", lat: null, lng: null },
@@ -132,7 +132,7 @@ export const BUS_ROUTES = {
         ]
     },
     "110": {
-        driver: "SURESHKUMAR - 8754335454",
+        driver: "SURESHKUMAR",
         stops: [
             { id: 1, name: "Manamadurai", time: "7:20", lat: null, lng: null },
             { id: 2, name: "Rajakambeeram", time: "7:25", lat: null, lng: null },
@@ -144,7 +144,7 @@ export const BUS_ROUTES = {
         ]
     },
     "111": {
-        driver: "KUMAR - 7639588121",
+        driver: "KUMAR",
         stops: [
             { id: 1, name: "Melur Bus Stand", time: "7:10", lat: null, lng: null },
             { id: 2, name: "Agriculture College - Vowval Thottam", time: "7:30", lat: null, lng: null },
@@ -153,7 +153,7 @@ export const BUS_ROUTES = {
         ]
     },
     "112": {
-        driver: "MANIKANDAN - 8870686741",
+        driver: "MANIKANDAN",
         stops: [
             { id: 1, name: "Pannakudi", time: "7:20", lat: null, lng: null },
             { id: 2, name: "VEERAPANDI VIKASA SCHOOL", time: "7:22", lat: null, lng: null },
@@ -169,7 +169,7 @@ export const BUS_ROUTES = {
         ]
     },
     "113": {
-        driver: "KARUPPASAMY - 6385783001",
+        driver: "KARUPPASAMY",
         stops: [
             { id: 1, name: "ALANGANALUR - BUS STAND", time: "7:10", lat: null, lng: null },
             { id: 2, name: "Kumaram", time: "7:15", lat: null, lng: null },
@@ -187,7 +187,7 @@ export const BUS_ROUTES = {
         ]
     },
     "114": {
-        driver: "MURUGAN - 9600912317",
+        driver: "MURUGAN",
         stops: [
             { id: 1, name: "B.B. Kulam - Uzhavar Santhai", time: "7:25", lat: 9.9388, lng: 78.1345 },
             { id: 2, name: "BB Kulam Bus Stop", time: "7:27", lat: 9.9380, lng: 78.1340 },
@@ -201,7 +201,7 @@ export const BUS_ROUTES = {
         ]
     },
     "115": {
-        driver: "RAMA KRISHNAN - 9360817263",
+        driver: "RAMA KRISHNAN",
         stops: [
             { id: 1, name: "Chellampatti - Theni Road", time: "7:05", lat: null, lng: null },
             { id: 2, name: "Karumathur - Theni Road", time: "7:09", lat: null, lng: null },
@@ -215,7 +215,7 @@ export const BUS_ROUTES = {
         ]
     },
     "116": {
-        driver: "VENKATESHGOPI - 9489035721",
+        driver: "VENKATESHGOPI",
         stops: [
             { id: 1, name: "Suguna Store - Anna Nagar", time: "7:45", lat: null, lng: null },
             { id: 2, name: "Ambiga Theatre - Vaigai Colony", time: "7:47", lat: null, lng: null },
@@ -223,7 +223,7 @@ export const BUS_ROUTES = {
         ]
     },
     "117": {
-        driver: "MUNEESWARAN - 9087513529",
+        driver: "MUNEESWARAN",
         stops: [
             { id: 1, name: "THANAKKANKULAM THILAHA BAKERY", time: "7:20", lat: null, lng: null },
             { id: 2, name: "Thanakkankulam Bus stop", time: "7:22", lat: null, lng: null },
@@ -240,7 +240,7 @@ export const BUS_ROUTES = {
         ]
     },
     "118": {
-        driver: "ANANTHAN - 6383526627",
+        driver: "ANANTHAN",
         stops: [
             { id: 1, name: "Tirumangalam -  Therkutheru", time: "7:10", lat: null, lng: null },
             { id: 2, name: "THIRUMANGALAM THEVAR STATUE", time: "7:15", lat: null, lng: null },
@@ -258,7 +258,7 @@ export const BUS_ROUTES = {
         ]
     },
     "119": {
-        driver: "SAKTHIVEL - 9788228271",
+        driver: "SAKTHIVEL",
         stops: [
             { id: 1, name: "Pykara", time: "7:25", lat: null, lng: null },
             { id: 2, name: "Palanganatham", time: "7:28", lat: null, lng: null },
@@ -271,7 +271,7 @@ export const BUS_ROUTES = {
         ]
     },
     "120": {
-        driver: "PERIYAKARUPPAN - 9629056384",
+        driver: "PERIYAKARUPPAN",
         stops: [
             { id: 1, name: "Narasingam", time: "7:20", lat: null, lng: null },
             { id: 2, name: "Sai Baba Temple - Gayathri Nagar", time: "7:22", lat: null, lng: null },
@@ -327,7 +327,7 @@ export const BUS_ROUTES = {
         ]
     },
     "124": {
-        driver: "RAJASEKARAN - 9751744040",
+        driver: "RAJASEKARAN",
         stops: [
             { id: 1, name: "SAMAYANALLUR - OORMECHIKULAM", time: "7:10", lat: null, lng: null },
             { id: 2, name: "SAMAYANALLUR - BUS STOP", time: "7:12", lat: null, lng: null },

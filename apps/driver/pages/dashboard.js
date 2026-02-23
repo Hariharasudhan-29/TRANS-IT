@@ -578,17 +578,27 @@ export default function DriverDashboard() {
                 }
             };
 
+            const handleGeoError = (err) => {
+                console.warn("GPS High Accuracy Failed or Timed Out, falling back to standard accuracy...", err);
+                if (watchId.current) navigator.geolocation.clearWatch(watchId.current);
+                watchId.current = navigator.geolocation.watchPosition(updateLocation, console.error, {
+                    enableHighAccuracy: false,
+                    timeout: 20000,
+                    maximumAge: 10000
+                });
+            };
+
             // Get initial position
-            navigator.geolocation.getCurrentPosition(updateLocation, console.error, {
+            navigator.geolocation.getCurrentPosition(updateLocation, handleGeoError, {
                 enableHighAccuracy: true,
-                timeout: 10000,
+                timeout: 15000,
                 maximumAge: 0
             });
 
             // Watch position with optimized settings
-            watchId.current = navigator.geolocation.watchPosition(updateLocation, console.error, {
+            watchId.current = navigator.geolocation.watchPosition(updateLocation, handleGeoError, {
                 enableHighAccuracy: true,
-                timeout: 10000,
+                timeout: 15000,
                 maximumAge: 0 // Always get fresh reading
             });
         } else {
@@ -690,7 +700,8 @@ export default function DriverDashboard() {
         if (db && busNumber) {
             const date = new Date().toISOString().split('T')[0];
             const sanitizedBus = busNumber.trim();
-            const driverName = user?.displayName || user?.email || 'Unknown Driver';
+            // Prioritize the name they registered with in the driver profile, fallback to Google displayName, then email
+            const driverName = driverProfileInfo?.name || user?.displayName || user?.email || 'Unknown Driver';
 
             if (isStarting) {
                 try {
@@ -711,6 +722,19 @@ export default function DriverDashboard() {
                         driverName: driverName,
                         currentTripId: tripRef.id
                     }, { merge: true });
+
+                    // 🔔 Notify students: Write a trip_notification so students get alerted
+                    const driverPhone = driverProfileInfo?.phoneNumber || 'N/A';
+                    await addDoc(collection(db, 'trip_notifications'), {
+                        busNumber: sanitizedBus,
+                        driverName: driverName,
+                        driverPhone: driverPhone,
+                        type: 'TRIP_STARTED',
+                        message: `🚌 Bus ${sanitizedBus} has started its trip! Driver: ${driverName}`,
+                        timestamp: serverTimestamp(),
+                        tripId: tripRef.id,
+                        date: date
+                    });
                 } catch (e) { console.error(e); }
             } else {
                 try {
@@ -1111,7 +1135,7 @@ export default function DriverDashboard() {
                                                 // Extract driver name safely
                                                 let assignedDriver = null;
                                                 if (routeData) {
-                                                    if (routeData.driver) assignedDriver = routeData.driver.split(' - ')[0];
+                                                    if (routeData.driver) assignedDriver = routeData.driver;
                                                     else if (routeData.driverName) assignedDriver = routeData.driverName;
                                                 }
 

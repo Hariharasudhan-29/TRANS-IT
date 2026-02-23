@@ -48,6 +48,10 @@ export default function StudentDashboard() {
     const [announcement, setAnnouncement] = useState(null);
     const [resolvedNotifications, setResolvedNotifications] = useState([]);
 
+    // 🔔 Trip Started Notification State
+    const [tripStartedNotification, setTripStartedNotification] = useState(null);
+    const lastSeenTripNotifRef = useRef(null);
+
     // Registration State
     const [showRegistration, setShowRegistration] = useState(false);
     const [isApproved, setIsApproved] = useState(true); // default true until DB says otherwise
@@ -199,6 +203,11 @@ export default function StudentDashboard() {
                 // Replace history state to prevent back button issues
                 if (typeof window !== 'undefined') {
                     window.history.replaceState(null, '', '/dashboard');
+
+                    // 🔔 Request browser notification permission early
+                    if ('Notification' in window && Notification.permission === 'default') {
+                        Notification.requestPermission();
+                    }
                 }
             } else {
                 // Use replace instead of push to prevent back button from showing dashboard
@@ -289,12 +298,30 @@ export default function StudentDashboard() {
 
     useEffect(() => {
         if (!("geolocation" in navigator)) return;
-        const watchId = navigator.geolocation.watchPosition(
-            (pos) => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-            (err) => console.error(err),
-            { enableHighAccuracy: true }
-        );
-        return () => navigator.geolocation.clearWatch(watchId);
+        let watchId;
+
+        const startWatching = (highAccuracy) => {
+            watchId = navigator.geolocation.watchPosition(
+                (pos) => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+                (err) => {
+                    console.warn(`GPS Error (HighAccuracy: ${highAccuracy}):`, err);
+                    // If high accuracy times out (err.code === 3), fallback to standard accuracy
+                    if (highAccuracy && err.code === 3) {
+                        console.warn("High Accuracy GPS timed out, falling back to standard accuracy...");
+                        if (watchId) navigator.geolocation.clearWatch(watchId);
+                        startWatching(false);
+                    }
+                },
+                {
+                    enableHighAccuracy: highAccuracy,
+                    timeout: highAccuracy ? 15000 : 20000,
+                    maximumAge: 5000
+                }
+            );
+        };
+
+        startWatching(true);
+        return () => { if (watchId) navigator.geolocation.clearWatch(watchId); };
     }, []);
 
     // Route Calculation (OSRM) - DIY Throttle
@@ -361,6 +388,68 @@ export default function StudentDashboard() {
         });
         return () => unsub();
     }, [trackingBus, user]);
+
+    // 🔔 Listen for trip started notifications for student's registered bus
+    useEffect(() => {
+        if (!user || !regForm.busNumber) return;
+        const db = getFirestore();
+        const q = query(
+            collection(db, 'trip_notifications'),
+            where('busNumber', '==', regForm.busNumber.trim())
+        );
+        const unsub = onSnapshot(q, (snap) => {
+            if (!snap.empty) {
+                // 1. Get all notifications
+                let notifications = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                // 2. Client-side filter: only 'TRIP_STARTED'
+                notifications = notifications.filter(n => n.type === 'TRIP_STARTED');
+
+                // 3. Client-side sort: newest first
+                notifications.sort((a, b) => {
+                    const timeA = a.timestamp?.toMillis ? a.timestamp.toMillis() : (a.timestamp?.seconds || 0);
+                    const timeB = b.timestamp?.toMillis ? b.timestamp.toMillis() : (b.timestamp?.seconds || 0);
+                    return timeB - timeA;
+                });
+
+                if (notifications.length > 0) {
+                    const notif = notifications[0];
+
+                    // Client-side date check: only show notifications from today
+                    const today = new Date().toISOString().split('T')[0];
+                    if (notif.date && notif.date !== today) return;
+
+                    // Only show if it's a new notification we haven't seen before
+                    if (lastSeenTripNotifRef.current !== notif.id) {
+                        lastSeenTripNotifRef.current = notif.id;
+                        setTripStartedNotification(notif);
+
+                        // 🔔 Fire browser push notification
+                        if (typeof window !== 'undefined' && 'Notification' in window) {
+                            if (Notification.permission === 'granted') {
+                                new Notification('🚌 Bus Trip Started!', {
+                                    body: notif.message || `Bus ${notif.busNumber} has started its trip!`,
+                                    icon: '/favicon.ico'
+                                });
+                            } else if (Notification.permission !== 'denied') {
+                                Notification.requestPermission().then(permission => {
+                                    if (permission === 'granted') {
+                                        new Notification('🚌 Bus Trip Started!', {
+                                            body: notif.message || `Bus ${notif.busNumber} has started its trip!`,
+                                            icon: '/favicon.ico'
+                                        });
+                                    }
+                                });
+                            }
+                        }
+
+                        // We no longer auto-dismiss, it's a persistent banner for the session
+                    }
+                }
+            }
+        });
+        return () => unsub();
+    }, [user, regForm.busNumber]);
 
     // Proximity Alert: Check if bus is within 2km
     useEffect(() => {
@@ -704,6 +793,52 @@ export default function StudentDashboard() {
                         {announcement && (
                             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} style={{ background: '#fff7ed', borderBottom: '1px solid #ffedd5', padding: '12px 24px', display: 'flex', alignItems: 'center', gap: '12px', fontSize: '14px', color: '#9a3412', fontWeight: '600', zIndex: 19 }}>
                                 <span>📢</span> {announcement.message}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* 🔔 Trip Started Announcement Banner */}
+                    <AnimatePresence>
+                        {tripStartedNotification && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                style={{
+                                    background: '#ecfdf5',
+                                    borderBottom: '1px solid #a7f3d0',
+                                    padding: '12px 24px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '6px',
+                                    color: '#065f46',
+                                    zIndex: 19
+                                }}
+                            >
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <div style={{ fontWeight: '700', fontSize: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '18px' }}>🚌</span> Your bus has started!
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                        <span style={{ fontSize: '12px', opacity: 0.8, fontWeight: '600' }}>
+                                            {tripStartedNotification.timestamp?.toMillis ?
+                                                new Date(tripStartedNotification.timestamp.toMillis()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                                : ''}
+                                        </span>
+                                        <button
+                                            onClick={() => setTripStartedNotification(null)}
+                                            style={{ background: 'transparent', border: 'none', color: '#059669', cursor: 'pointer', fontSize: '18px', padding: 0 }}
+                                        >×</button>
+                                    </div>
+                                </div>
+                                <div style={{ fontSize: '13px', marginLeft: '26px', opacity: 0.9 }}>
+                                    <div>{tripStartedNotification.message}</div>
+                                    {tripStartedNotification.driverPhone && tripStartedNotification.driverPhone !== 'N/A' && (
+                                        <div style={{ marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 'bold' }}>
+                                            📞 {tripStartedNotification.driverPhone}
+                                        </div>
+                                    )}
+                                </div>
                             </motion.div>
                         )}
                     </AnimatePresence>
