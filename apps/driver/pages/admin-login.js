@@ -154,7 +154,7 @@ export default function AdminLogin() {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="admin@transit.com"
+                            placeholder="Enter email address"
                             required
                             style={{
                                 width: '100%', padding: '14px', borderRadius: '14px',
